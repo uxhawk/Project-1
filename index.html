@@ -18,6 +18,10 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
     <title>Cool Things</title>
+    <!-- Google Places -->
+    <script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0m4XclxBQVjg46CybgWBctk1RYEI2YNo&libraries=places">
+    </script>
 
 </head>
 
@@ -29,7 +33,7 @@
                     <div class="column is-6 is-offset-3">
                         <h1 class="title is-uppercase has-text-centered is-size-1 has-text-white">Cool Things</h1>
                         <h2 class="has-text-centered is-size-4 has-text-white">Grub | Concerts | Hiking</h2>
-                        <input id="city-val" class="input is-rounded is-large m-t-xxl m-b-sm" type="text"
+                        <input id="pac-input" class="input is-rounded is-large m-t-xxl m-b-sm" type="text"
                             placeholder="City">
                         <button id="search-btn"
                             class="button is-medium is-rounded is-primary is-fullwidth m-t-sm m-b-sm">Show Me Cool
@@ -41,7 +45,7 @@
     </div>
 
 
-
+    <div id="service"></div>
 </body>
 
 </html>
