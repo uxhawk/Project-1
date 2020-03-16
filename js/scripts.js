@@ -2,6 +2,12 @@ $(document).ready(function() {
     var favorites = [];
     var city, lat, lng;
 
+    //click event listener for event toggles
+    $(document).on("click", ".toggle", function() {
+        console.log($(this).attr("data-attr"));
+    });
+
+
     $("#search-btn").click(function() {
         city = $("#pac-input").val();
         if (city === "") {
