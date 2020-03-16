@@ -26,39 +26,62 @@
 </head>
 
 <body>
-    <div id="bg">
-        <section class="section is-medium">
-            <div class="container">
-                <div class="columns">
-                    <div class="column is-6 is-offset-3">
-                        <h1 class="title is-uppercase has-text-centered is-size-1 has-text-white">Cool Things</h1>
-                        <h2 class="has-text-centered is-size-4 has-text-white">Grub | Concerts | Hiking</h2>
-                        <input id="pac-input" class="input is-rounded is-large m-t-xxl m-b-sm" type="text"
-                            placeholder="City">
-                        <button id="search-btn"
-                            class="button is-medium is-rounded is-primary is-fullwidth m-t-sm m-b-sm">Show Me Cool
-                            Things</button>
-                        <div class="has-text-centered m-b-lg m-t-sm">
-                            <button class="button is-rounded">
-                                <span class="icon is-small">
-                                    <i class="fas fa-beer"></i>
-                                </span>
-                            </button>
-                            <button class="button is-rounded">
-                                <span class="icon is-small">
-                                    <i class="fas fa-utensils"></i>
-                                </span>
-                            </button>
-                            <button class="button is-rounded">
-                                <span class="icon is-small">
-                                    <i class="fas fa-music"></i>
-                                </span>
-                            </button>
-                        </div>
+    <section class="section is-medium">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-6 is-offset-3">
+                    <h1 class="title is-uppercase has-text-centered is-size-1 has-text-white">Cool Things</h1>
+                    <h2 class="has-text-centered is-size-4 has-text-white">Grub | Concerts | Hiking</h2>
+                    <input id="pac-input" class="input is-rounded is-large m-t-xxl m-b-sm" type="text"
+                        placeholder="City">
+                    <button id="search-btn"
+                        class="button is-medium is-rounded is-primary is-fullwidth m-t-sm m-b-sm">Show Me Cool
+                        Things</button>
+                    <div class="has-text-centered m-b-lg m-t-sm">
+                        <button class="button is-rounded">
+                            <span class="icon is-small">
+                                <i class="fas fa-beer"></i>
+                            </span>
+                        </button>
+                        <button class="button is-rounded">
+                            <span class="icon is-small">
+                                <i class="fas fa-utensils"></i>
+                            </span>
+                        </button>
+                        <button class="button is-rounded">
+                            <span class="icon is-small">
+                                <i class="fas fa-music"></i>
+                            </span>
+                        </button>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <table id="search-results" class="table is-striped is-fullwidth is-bordered is-hoverable">
+                <tr class="th is-selected">
+                    <th class="has-text-centered"><span id="event-type-th">Breweries </span>in <span
+                            id="event-city-th">City</span>
+                    </th>
+                </tr>
+                <tr>
+                    <td id="result${i}" class="has-text-centered">
+                        <div class="columns">
+                            <div class="column is-4">image</div>
+                            <div class="column is-4">something</div>
+                            <div class="column is-4">else</div>
+                        </div>
+                    </td>
+                </tr>
+
+
+
+            </table>
+        </div>
+
+    </section>
     </div>
 
 
