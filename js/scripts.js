@@ -1,10 +1,15 @@
 $(document).ready(function() {
     var favorites = [];
     var city, lat, lng;
+    var apiSelector;
 
     //click event listener for event toggles
     $(document).on("click", ".toggle", function() {
-        console.log($(this).attr("data-attr"));
+
+        $(this).addClass("is-outlined has-text-primary");
+        $(this).removeClass("has-text-white has-text-primary");
+        apiSelector = $(this).attr("data-attr");
+        console.log(apiSelector);
     });
 
 
