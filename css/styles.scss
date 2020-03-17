@@ -58,17 +58,19 @@ $positions: (('t', 'top'),
 }
 
 body {
-
+    height: 100vh;
     font-family: 'Montserrat';
     margin: 0;
+    background: color(primary);
+    padding-bottom: 15px;
 
-    #bg {
-        clip-path: polygon(50% 0%, 100% 0, 100% 75%, 16% 100%, 0 100%, 0 0);
-        background-color: color(primary);
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        z-index: -1;
+    // #bg {
+    //     clip-path: polygon(50% 0%, 100% 0, 100% 75%, 16% 100%, 0 100%, 0 0);
+    //     background-color: color(primary);
+    //     width: 100%;
+    //     height: 100%;
+    //     position: absolute;
+    //     z-index: -1;
 
-    }
+    // }
 }
