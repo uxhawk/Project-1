@@ -51,10 +51,11 @@ $(document).ready(function() {
 
     $("#search-btn").click(function() {
         city = $("#pac-input").val();
+
         if (city === "") {
             return
         }
-
+        $("#search-btn").addClass("is-loading");
         var request = {
             query: city
         };
@@ -89,6 +90,7 @@ $(document).ready(function() {
                     "user-key": "bf03c64be8ee3a6da3d0cb9bfd69e5e3"
                 }
             }).then(function(response) {
+                $("#search-btn").removeClass("is-loading");
                 $("#results-table").show();
                 $("#search-results").empty();
                 console.log(response);
