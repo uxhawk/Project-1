@@ -68,32 +68,34 @@
     </section>
     <section>
         <div class="container">
-            <table id="search-results" class="table is-striped is-fullwidth is-bordered is-hoverable">
-                <tr class="th is-selected">
-                    <th class="has-text-centered"><span id="event-type-th">Breweries </span>in <span
-                            id="event-city-th">City</span>
-                    </th>
-                </tr>
-                <tr>
-                    <td id="result${i}" class="has-text-centered">
-                        <div class="columns">
-                            <div class="column is-4"></div>
-                            <div class="column is-4">something</div>
-                            <div class="column is-4">else</div>
-                        </div>
-                    </td>
-                </tr>
-
-
-
+            <table id="results-table" class="table is-striped is-fullwidth is-bordered is-hoverable m-b-xl">
+                <thead>
+                    <tr>
+                        <th class="has-text-centered is-selected">
+                            <span id="event-type-th">Breweries </span>in <span id="event-city-th">City</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="search-results">
+                </tbody>
             </table>
-        </div>
 
+
+
+        </div>
     </section>
     </div>
 
 
     <div id="service"></div>
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                <strong>CoolThings</strong> by <a href="">David Hawkins</a>, <a href="">Frank Calderon</a>, <a
+                    href="">Anil Chagari</a>, and <a href="">Edom Meshesha</a>
+            </p>
+        </div>
+    </footer>
 </body>
 
 </html>
