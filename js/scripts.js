@@ -52,38 +52,42 @@ $(document).ready(function() {
             lng = results[0].geometry.location.lng();
             console.log(lat, lng);
 
-            var queryURL = "https://developers.zomato.com/api/v2.1/search?count=10&lat=" + lat + "&lon=" + lng + "&sort=rating&order=asc";
+            var queryURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}&term=restaurant`;
+            console.log(queryURL);
 
             $.ajax({
                 url: queryURL,
-                method: "GET",
                 headers: {
-                    "user-key": "bf03c64be8ee3a6da3d0cb9bfd69e5e3"
-                }
+                    'Authorization': 'Bearer sP1TEnIO70-vlxbP1_XhMbHHVmAl3E4f6KAxS8-abCdCwdazlP8l6yKj9gPEjUkbFximC8S_AcB9U-WQi87lR28UT613l55rFoLQ2Gis6jBgr2k31TL-pZVrxEFxXnYx',
+                },
+                method: 'GET',
+                dataType: 'json'
             }).then(function(response) {
+                console.log(response);
                 $("#search-btn").removeClass("is-loading");
                 $("#results-table").show();
                 $("#search-results").empty();
-                console.log(response);
 
-                for (let i = 0; i < response.restaurants.length; i++) {
+
+
+                for (let i = 0; i < 19; i++) {
 
                     var resultsRow = $(`<tr>
                     <td id="result${i}">
                     <div class="columns is-mobile is-multiline">
-                        <div class="column is-one-quarter"><img
-                                src="${response.restaurants[i].restaurant.thumb}"
+                        <div class="column is-one-third"><img
+                                src="${response.businesses[i].image_url}"
                                 alt="">
                         </div>
-                        <div class="column is-three-quarters has-text-left p-l-xl">
-                            <h2 class="is-size-4 has-text-grey-dark">${response.restaurants[i].restaurant.name}
+                        <div class="column is-two-thirds has-text-left p-l-md">
+                            <h2 class="is-size-4 has-text-grey-dark">${response.businesses[i].name}
                             </h2>
-                            <p class="is-size-5 has-text-grey-dark m-t-sm">Rating: <span id=rating${i}
-                                    class="p-l-md p-r-xs">${response.restaurants[i].restaurant.user_rating.aggregate_rating}</span><i class="fas fa-star"></i>
-                            </p>
-                            <p class="is-size-6 has-text-grey-light m-b-md">
-                                ${response.restaurants[i].restaurant.cuisines}</p>
-                            <a target="blank" href="https://maps.google.com/?q=${response.restaurants[i].restaurant.location.address}">${response.restaurants[i].restaurant.location.address} <span
+                            <p class="is-size-5 has-text-grey-dark m-t-sm">Rating: <span id="rating${i}"
+                                    class="p-l-md p-r-xs">${response.businesses[i].rating}</span><i class="fas fa-star"></i>
+                                    ${response.businesses[i].review_count} Reviews</p>
+                            <p class="is-size-6 has-text-grey-light m-b-md m-t-xs">
+                                ${response.businesses[i].categories[0].title}</p>
+                            <a target="blank" href="https://maps.google.com/?q=${response.businesses[i].location.address1}">${response.businesses[i].location.address1} <span
                                     class="is-size-4"><i class="fas fa-directions"></i></span></a>
                         </div>
                     </div>
