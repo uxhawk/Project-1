@@ -27,7 +27,7 @@
 
 
 <body>
-    <a target="blank" href="https://www.google.com/maps/search/?api=1&query=58.698017,-152.522067">Test Link</a>
+
     <section class="section is-small">
         <div class="container">
             <div class="columns">
@@ -36,22 +36,19 @@
                     <h2 class="has-text-centered is-size-4 has-text-white">Grub | Concerts | Hiking</h2>
                     <div class="has-text-centered m-t-xxl m-b-sm">
                         <h3 class="is-size-5 has-text-white">Select a Cool Thing</h3>
-                        <button
-                            class="button is-primary is-inverted is-outlined is-rounded toggle m-sm has-text-white is-medium"
+                        <button class="button is-primary is-inverted is-outlined is-rounded toggle m-sm is-medium"
                             data-attr="0">
                             <span class="icon is-small">
                                 <i class="fas fa-beer"></i>
                             </span>
                         </button>
-                        <button
-                            class="button is-primary is-inverted is-outlined is-rounded toggle m-sm has-text-white is-medium"
+                        <button class="button is-primary is-inverted is-outlined is-rounded toggle m-sm  is-medium"
                             data-attr="1">
                             <span class="icon is-small">
                                 <i class="fas fa-utensils"></i>
                             </span>
                         </button>
-                        <button
-                            class="button is-primary is-inverted is-outlined is-rounded toggle m-sm has-text-white is-medium"
+                        <button class="button is-primary is-inverted is-outlined is-rounded toggle m-sm is-medium"
                             data-attr="2">
                             <span class="icon is-small">
                                 <i class="fas fa-music"></i>
@@ -81,24 +78,6 @@
                 <tbody id="search-results">
                     <tr>
                         <td id="result${i}">
-                            <div class="columns is-mobile is-multiline">
-                                <div class="column is-one-quarter"><img
-                                        src="https://pbs.twimg.com/profile_images/1150268408287698945/x4f3ITmx_400x400.png"
-                                        alt="">
-                                </div>
-                                <div class="column is-three-quarters has-text-left p-l-xl">
-
-                                    <h2 class="is-size-4 has-text-grey-dark">${response.restaurants[i].restaurant.name}
-                                    </h2>
-                                    <p class="is-size-5 has-text-grey-dark m-t-sm">Rating: <span id=rating${i}
-                                            class="p-l-md p-r-xs">1.9</span><i class="fas fa-star"></i>
-                                    </p>
-                                    <p class="is-size-6 has-text-grey-light m-b-md">
-                                        ${response.restaurants[i].restaurant.cuisines}</p>
-                                    <p class="has-text-link">${response.restaurants[i].restaurant.cuisines} <span
-                                            class="is-size-4"><i class="fas fa-directions"></i></span></p>
-                                </div>
-                            </div>
                         </td>
                     </tr>
                 </tbody>

@@ -8,7 +8,7 @@ $(document).ready(function() {
     $(document).on("click", ".toggle", function() {
 
         $(this).addClass("is-outlined has-text-primary");
-        $(this).removeClass("has-text-white has-text-primary");
+        $(this).removeClass("has-text-white ");
         apiSelector = $(this).attr("data-attr");
         console.log(apiSelector);
     });

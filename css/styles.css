@@ -331,4 +331,8 @@ body .push {
 body #search-results {
   word-wrap: anywhere;
 }
+
+body .toggle {
+  border: 2px solid white;
+}
 /*# sourceMappingURL=styles.css.map */
