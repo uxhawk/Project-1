@@ -96,21 +96,27 @@ $(document).ready(function() {
                 console.log(response);
 
                 for (let i = 0; i < response.restaurants.length; i++) {
-                    // var h1 = $("<h1>");
-                    // h1.text(response.restaurants[i].restaurant.name);
-                    // $("#results").append(h1);
-                    // console.log(response.restaurants[i].restaurant.name);
-
 
                     var resultsRow = $(`<tr>
-                        <td id="result${i}" class="has-text-centered">
-                            <div class="columns">
-                                <div class="column is-4"><img src="${response.restaurants[i].restaurant.thumb}" alt=""></div>
-                                <div class="column is-4"><p>${response.restaurants[i].restaurant.name}</p>
-                                <p>${response.restaurants[i].restaurant.cuisines}</p></div>
-                                <div class="column is-4"><p>${response.restaurants[i].restaurant.highlights[2]}</p></div>
-                            </div>
-                        </td>
+                    <td id="result${i}">
+                    <div class="columns is-mobile is-multiline">
+                        <div class="column is-one-quarter"><img
+                                src="${response.restaurants[i].restaurant.thumb}"
+                                alt="">
+                        </div>
+                        <div class="column is-three-quarters has-text-left p-l-xl">
+                            <h2 class="is-size-4 has-text-grey-dark">${response.restaurants[i].restaurant.name}
+                            </h2>
+                            <p class="is-size-5 has-text-grey-dark m-t-sm">Rating: <span id=rating${i}
+                                    class="p-l-md p-r-xs">${response.restaurants[i].restaurant.user_rating.aggregate_rating}</span><i class="fas fa-star"></i>
+                            </p>
+                            <p class="is-size-6 has-text-grey-light m-b-md">
+                                ${response.restaurants[i].restaurant.cuisines}</p>
+                            <a target="blank" href="https://maps.google.com/?q=${response.restaurants[i].restaurant.location.address}">${response.restaurants[i].restaurant.location.address} <span
+                                    class="is-size-4"><i class="fas fa-directions"></i></span></a>
+                        </div>
+                    </div>
+                </td>
                     </tr>`);
 
                     $("#search-results").append(resultsRow);

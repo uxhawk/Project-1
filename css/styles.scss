@@ -77,4 +77,8 @@ body {
     .push {
         height: 400px;
     }
+
+    #search-results {
+        word-wrap: anywhere;
+    }
 }
