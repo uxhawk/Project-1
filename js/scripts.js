@@ -1,22 +1,16 @@
 $(document).ready(function() {
     var favorites = [];
-    var city, lat, lng;
-    var apiSelector;
+    var city, lat, lng, apiSelector, lat, lng;
 
     $("#results-table").hide();
     //click event listener for event toggles
     $(document).on("click", ".toggle", function() {
 
         $(this).addClass("is-outlined has-text-primary");
-        $(this).removeClass("has-text-white has-text-primary");
+        $(this).removeClass("has-text-white ");
         apiSelector = $(this).attr("data-attr");
         console.log(apiSelector);
     });
-
-
-    var lat;
-    var lng;
-
 
     //places auto complete
     var input = document.getElementById("pac-input");
@@ -25,36 +19,13 @@ $(document).ready(function() {
     };
 
 
-    function callback(results, status) {
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
-
-            lat = results[0].geometry.location.lat();
-            lng = results[0].geometry.location.lng();
-
-            console.log(lat, lng);
-
-            var queryURL = "https://developers.zomato.com/api/v2.1/search?count=10&lat=" + lat + "&lon=" + lng + "&sort=rating&order=desc";
-
-            $.ajax({
-                url: queryURL,
-                method: "GET",
-                headers: {
-                    "user-key": "bf03c64be8ee3a6da3d0cb9bfd69e5e3"
-                }
-            }).then(function(response) {
-                console.log(response);
-            });
-        }
-    }
-
-
-
     $("#search-btn").click(function() {
         city = $("#pac-input").val();
+
         if (city === "") {
             return
         }
-
+        $("#search-btn").addClass("is-loading");
         var request = {
             query: city
         };
@@ -79,36 +50,48 @@ $(document).ready(function() {
 
             lat = results[0].geometry.location.lat();
             lng = results[0].geometry.location.lng();
+            console.log(lat, lng);
 
-            var queryURL = "https://developers.zomato.com/api/v2.1/search?count=10&lat=" + lat + "&lon=" + lng + "&sort=rating&order=asc";
+            var queryURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}&term=restaurant`;
+            console.log(queryURL);
 
             $.ajax({
                 url: queryURL,
-                method: "GET",
                 headers: {
-                    "user-key": "bf03c64be8ee3a6da3d0cb9bfd69e5e3"
-                }
+                    'Authorization': 'Bearer sP1TEnIO70-vlxbP1_XhMbHHVmAl3E4f6KAxS8-abCdCwdazlP8l6yKj9gPEjUkbFximC8S_AcB9U-WQi87lR28UT613l55rFoLQ2Gis6jBgr2k31TL-pZVrxEFxXnYx',
+                },
+                method: 'GET',
+                dataType: 'json'
             }).then(function(response) {
+                console.log(response);
+                $("#search-btn").removeClass("is-loading");
                 $("#results-table").show();
                 $("#search-results").empty();
-                console.log(response);
 
-                for (let i = 0; i < response.restaurants.length; i++) {
-                    // var h1 = $("<h1>");
-                    // h1.text(response.restaurants[i].restaurant.name);
-                    // $("#results").append(h1);
-                    // console.log(response.restaurants[i].restaurant.name);
 
+
+                for (let i = 0; i < 19; i++) {
 
                     var resultsRow = $(`<tr>
-                        <td id="result${i}" class="has-text-centered">
-                            <div class="columns">
-                                <div class="column is-4"><img src="${response.restaurants[i].restaurant.thumb}" alt=""></div>
-                                <div class="column is-4"><p>${response.restaurants[i].restaurant.name}</p>
-                                <p>${response.restaurants[i].restaurant.cuisines}</p></div>
-                                <div class="column is-4"><p>${response.restaurants[i].restaurant.highlights[2]}</p></div>
-                            </div>
-                        </td>
+                    <td id="result${i}">
+                    <div class="columns is-mobile is-multiline">
+                        <div class="column is-one-third"><img
+                                src="${response.businesses[i].image_url}"
+                                alt="">
+                        </div>
+                        <div class="column is-two-thirds has-text-left p-l-md">
+                            <h2 class="is-size-4 has-text-grey-dark">${response.businesses[i].name}
+                            </h2>
+                            <p class="is-size-5 has-text-grey-dark m-t-sm">Rating: <span id="rating${i}"
+                                    class="p-l-md p-r-xs">${response.businesses[i].rating}</span><i class="fas fa-star"></i>
+                                    ${response.businesses[i].review_count} Reviews</p>
+                            <p class="is-size-6 has-text-grey-light m-b-md m-t-xs">
+                                ${response.businesses[i].categories[0].title}</p>
+                            <a target="blank" href="https://maps.google.com/?q=${response.businesses[i].location.address1}">${response.businesses[i].location.address1} <span
+                                    class="is-size-4"><i class="fas fa-directions"></i></span></a>
+                        </div>
+                    </div>
+                </td>
                     </tr>`);
 
                     $("#search-results").append(resultsRow);

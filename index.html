@@ -25,7 +25,9 @@
 
 </head>
 
+
 <body>
+
     <section class="section is-small">
         <div class="container">
             <div class="columns">
@@ -34,22 +36,19 @@
                     <h2 class="has-text-centered is-size-4 has-text-white">Grub | Concerts | Hiking</h2>
                     <div class="has-text-centered m-t-xxl m-b-sm">
                         <h3 class="is-size-5 has-text-white">Select a Cool Thing</h3>
-                        <button
-                            class="button is-primary is-inverted is-outlined is-rounded toggle m-sm has-text-white is-medium"
+                        <button class="button is-primary is-inverted is-outlined is-rounded toggle m-sm is-medium"
                             data-attr="0">
                             <span class="icon is-small">
                                 <i class="fas fa-beer"></i>
                             </span>
                         </button>
-                        <button
-                            class="button is-primary is-inverted is-outlined is-rounded toggle m-sm has-text-white is-medium"
+                        <button class="button is-primary is-inverted is-outlined is-rounded toggle m-sm  is-medium"
                             data-attr="1">
                             <span class="icon is-small">
                                 <i class="fas fa-utensils"></i>
                             </span>
                         </button>
-                        <button
-                            class="button is-primary is-inverted is-outlined is-rounded toggle m-sm has-text-white is-medium"
+                        <button class="button is-primary is-inverted is-outlined is-rounded toggle m-sm is-medium"
                             data-attr="2">
                             <span class="icon is-small">
                                 <i class="fas fa-music"></i>
@@ -59,7 +58,7 @@
                     <input id="pac-input" class="input is-rounded is-large m-t-sm m-b-sm" type="text"
                         placeholder="City">
                     <button id="search-btn"
-                        class="button is-medium is-rounded is-primary is-fullwidth m-t-sm m-b-xl">Show Me Cool
+                        class="button is-medium is-rounded is-primary is-fullwidth m-t-sm m-b-xl ">Show Me Cool
                         Things</button>
 
                 </div>
@@ -77,6 +76,10 @@
                     </tr>
                 </thead>
                 <tbody id="search-results">
+                    <tr>
+                        <td id="result${i}">
+                        </td>
+                    </tr>
                 </tbody>
             </table>
 
