@@ -3,6 +3,7 @@ $(document).ready(function() {
     var city, lat, lng;
     var apiSelector;
 
+    $("#results-table").hide();
     //click event listener for event toggles
     $(document).on("click", ".toggle", function() {
 
@@ -88,19 +89,29 @@ $(document).ready(function() {
                     "user-key": "bf03c64be8ee3a6da3d0cb9bfd69e5e3"
                 }
             }).then(function(response) {
+                $("#results-table").show();
+                $("#search-results").empty();
                 console.log(response);
-                var resultsTable = $("#search-results");
-                for (let i = 0; i < response.length; i++) {
+
+                for (let i = 0; i < response.restaurants.length; i++) {
+                    // var h1 = $("<h1>");
+                    // h1.text(response.restaurants[i].restaurant.name);
+                    // $("#results").append(h1);
+                    // console.log(response.restaurants[i].restaurant.name);
+
+
                     var resultsRow = $(`<tr>
-                    <td id="result${i}" class="has-text-centered">
-                        <div class="columns">
-                            <div class="column is-4">${respnse.something[i]}</div>
-                            <div class="column is-4">${respnse.something[i]}</div>
-                            <div class="column is-4">${respnse.something[i]}</div>
-                        </div>
-                    </td>
-                </tr>`);
-                    resultsTable.append(resultsRow);
+                        <td id="result${i}" class="has-text-centered">
+                            <div class="columns">
+                                <div class="column is-4"><img src="${response.restaurants[i].restaurant.thumb}" alt=""></div>
+                                <div class="column is-4"><p>${response.restaurants[i].restaurant.name}</p>
+                                <p>${response.restaurants[i].restaurant.cuisines}</p></div>
+                                <div class="column is-4"><p>${response.restaurants[i].restaurant.highlights[2]}</p></div>
+                            </div>
+                        </td>
+                    </tr>`);
+
+                    $("#search-results").append(resultsRow);
                 }
             });
 
