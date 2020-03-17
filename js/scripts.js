@@ -33,7 +33,7 @@ $(document).ready(function() {
 
             console.log(lat, lng);
 
-            var queryURL = "https://developers.zomato.com/api/v2.1/search?count=10&lat=" + lat + "&lon=" + lng + "&sort=rating&order=asc";
+            var queryURL = "https://developers.zomato.com/api/v2.1/search?count=10&lat=" + lat + "&lon=" + lng + "&sort=rating&order=desc";
 
             $.ajax({
                 url: queryURL,
