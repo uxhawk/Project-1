@@ -2,7 +2,7 @@ $(document).ready(function() {
     var favorites = [];
     var city, lat, lng, lat, lng;
     var apiSelector = 0;
-    var yelpTerm = "Restaurants";
+    var searchTerm = "Restaurants";
 
     $("#results-table").hide();
 
@@ -14,13 +14,14 @@ $(document).ready(function() {
         $(this).addClass("is-hovered");
         if (apiSelector === 0) {
             $("#beer, #music").removeClass("is-hovered");
-            yelpTerm = "restaurants";
+            searchTerm = "restaurants";
         } else if (apiSelector === 1) {
             $("#restaurant, #music").removeClass("is-hovered");
             console.log("remove hover");
-            yelpTerm = "Breweries";
+            searchTerm = "Breweries";
         } else if (apiSelector === 2) {
             $("#restaurant, #beer").removeClass("is-hovered");
+            searchTerm = "Concerts";
         }
 
 
@@ -66,7 +67,7 @@ $(document).ready(function() {
             lng = results[0].geometry.location.lng();
             console.log(lat, lng);
 
-            var queryURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}&term=${yelpTerm}`;
+            var queryURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}&term=${searchTerm}`;
             console.log(queryURL);
 
             $.ajax({
