@@ -92,6 +92,7 @@ $(document).ready(function() {
                 $("#event-type-th").text(searchTerm);
                 $("#event-city-th").text(city);
                 $("#search-results").empty();
+
                 $("#weather").show();
                 for (let i = 0; i < 19; i++) {
 
@@ -136,6 +137,7 @@ $(document).ready(function() {
                 url: weatherURL,
                 method: 'GET'
             }).then(function(response) {
+                $("#weather").empty();
                 var iconCode = response.weather[0].icon;
                 var iconURL = `https://openweathermap.org/img/wn/${formatIcon(iconCode)}d.png`;
                 var p1 = $(`<p class="is-size-5">Current Weather in <span id="city-weather">${city}</span></p>`);
