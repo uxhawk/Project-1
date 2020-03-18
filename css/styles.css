@@ -335,4 +335,8 @@ body #search-results {
 body .toggle {
   border: 2px solid white;
 }
+
+body .deselected {
+  color: red;
+}
 /*# sourceMappingURL=styles.css.map */
