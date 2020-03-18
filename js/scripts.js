@@ -7,6 +7,13 @@ $(document).ready(function() {
     $("#results-table").hide();
     $("#weather").hide();
 
+    //click event listener for favorite hearts
+    $(document).on("click", ".favorite", function() {
+        console.log("you clicked a favorite");
+
+
+    });
+
     //click event listener for event toggles
     $(document).on("click", ".toggle", function() {
         apiSelector = parseInt($(this).attr("data-attr"));
@@ -85,6 +92,7 @@ $(document).ready(function() {
                 $("#event-type-th").text(searchTerm);
                 $("#event-city-th").text(city);
                 $("#search-results").empty();
+                $("#weather").show();
                 for (let i = 0; i < 19; i++) {
 
                     var resultsRow = $(`<tr>
@@ -95,8 +103,14 @@ $(document).ready(function() {
                                 alt="">
                         </div>
                         <div class="column is-two-thirds has-text-left p-l-md">
-                            <h2 class="is-size-4 has-text-grey-dark">${response.businesses[i].name}
-                            </h2>
+                            <div class="level p-b-none m-b-none">
+                                <div class="level-left">
+                                    <h2 class="is-size-4 has-text-grey-dark">${response.businesses[i].name}</h2>
+                                </div>
+                                <div class="level-right p-r-md">
+                                    <i class="far fa-heart favorite" selected="0"></i>
+                                </div>
+                            </div>
                             <p class="is-size-6 has-text-grey-light m-b-sm m-t-xxs">
                                 ${response.businesses[i].categories[0].title}</p>
                             <p class="is-size-6 has-text-grey-dark m-t-sm">Rating: <span id="rating${i}"
@@ -129,9 +143,8 @@ $(document).ready(function() {
                 $("#weather").append(p1);
                 $("#weather").append(p2);
 
-                $("#weather").show();
-                // $("#city-weather").text(city);
-                // $("#cur-temp").text(response.main.temp);
+
+
 
             });
 
