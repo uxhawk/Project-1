@@ -96,13 +96,16 @@ $(document).ready(function() {
                         <div class="column is-two-thirds has-text-left p-l-md">
                             <h2 class="is-size-4 has-text-grey-dark">${response.businesses[i].name}
                             </h2>
-                            <p class="is-size-5 has-text-grey-dark m-t-sm">Rating: <span id="rating${i}"
-                                    class="p-l-md p-r-xs">${response.businesses[i].rating}</span><i class="fas fa-star"></i>
-                                    ${response.businesses[i].review_count} Reviews</p>
-                            <p class="is-size-6 has-text-grey-light m-b-md m-t-xs">
+                            <p class="is-size-6 has-text-grey-light m-b-sm m-t-xxs">
                                 ${response.businesses[i].categories[0].title}</p>
+                            <p class="is-size-6 has-text-grey-dark m-t-sm">Rating: <span id="rating${i}"
+                                    class="p-l-sm p-r-xs">${response.businesses[i].rating}</span><i class="fas fa-star"></i>
+                                    </p>
+                                    <p class="is-size-6 has-text-grey-dark m-t-xxs">Reviews: <span class="p-l-sm">${response.businesses[i].review_count}</span>
+                                    </p>
+                            
                             <a target="blank" href="https://maps.google.com/?q=${response.businesses[i].location.address1}">${response.businesses[i].location.address1} <span
-                                    class="is-size-4"><i class="fas fa-directions"></i></span></a>
+                                    class="is-size-4"><i class="fas fa-directions p-l-xs"></i></span></a>
                         </div>
                     </div>
                 </td>
