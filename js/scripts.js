@@ -5,6 +5,7 @@ $(document).ready(function() {
     var searchTerm = "Restaurants";
 
     $("#results-table").hide();
+    $("#weather").hide();
 
     //click event listener for event toggles
     $(document).on("click", ".toggle", function() {
@@ -84,9 +85,6 @@ $(document).ready(function() {
                 $("#event-type-th").text(searchTerm);
                 $("#event-city-th").text(city);
                 $("#search-results").empty();
-
-
-
                 for (let i = 0; i < 19; i++) {
 
                     var resultsRow = $(`<tr>
@@ -118,9 +116,35 @@ $(document).ready(function() {
                 }
             });
 
+            var weatherURL = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=imperial&appid=3ccf586db422a1812c96a52bbfafc856`;
+
+            $.ajax({
+                url: weatherURL,
+                method: 'GET'
+            }).then(function(response) {
+                var iconCode = response.weather[0].icon;
+                var iconURL = `https://openweathermap.org/img/wn/${formatIcon(iconCode)}d.png`;
+                var p1 = $(`<p class="is-size-5">Current Weather in <span id="city-weather">${city}</span></p>`);
+                var p2 = $(`<p id="cur-temp" class="is-size-3 level-item">${Math.round(response.main.temp)}&#730F<img src="${iconURL}" alt="Weather icon"></p>`);
+                $("#weather").append(p1);
+                $("#weather").append(p2);
+
+                $("#weather").show();
+                // $("#city-weather").text(city);
+                // $("#cur-temp").text(response.main.temp);
+
+            });
 
             //all ajax functions should be above this last curly bracket
         }
+    }
+
+    function formatIcon(code) {
+        var arr = code.split("");
+        arr.pop();
+        iconCode = arr.join("");
+        // console.log(iconCode);
+        return iconCode;
     }
 
 
