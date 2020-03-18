@@ -2,7 +2,7 @@ $(document).ready(function() {
     var favorites = [];
     var city, lat, lng, lat, lng;
     var apiSelector = 0;
-    var yelpTerm = "restaurant";
+    var yelpTerm = "Restaurants";
 
     $("#results-table").hide();
 
@@ -14,11 +14,11 @@ $(document).ready(function() {
         $(this).addClass("is-hovered");
         if (apiSelector === 0) {
             $("#beer, #music").removeClass("is-hovered");
-            yelpTerm = "restaurant";
+            yelpTerm = "restaurants";
         } else if (apiSelector === 1) {
             $("#restaurant, #music").removeClass("is-hovered");
             console.log("remove hover");
-            yelpTerm = "brewery";
+            yelpTerm = "Breweries";
         } else if (apiSelector === 2) {
             $("#restaurant, #beer").removeClass("is-hovered");
         }
@@ -80,6 +80,8 @@ $(document).ready(function() {
                 console.log(response);
                 $("#search-btn").removeClass("is-loading");
                 $("#results-table").show();
+                $("#event-type-th").text(yelpTerm);
+                $("#event-city-th").text(city);
                 $("#search-results").empty();
 
 
