@@ -1,15 +1,26 @@
 $(document).ready(function() {
     var favorites = [];
-    var city, lat, lng, apiSelector, lat, lng;
+    var city, lat, lng, lat, lng;
+    var apiSelector = 0;
 
     $("#results-table").hide();
+
     //click event listener for event toggles
     $(document).on("click", ".toggle", function() {
-
-        $(this).addClass("is-outlined has-text-primary");
-        $(this).removeClass("has-text-white ");
-        apiSelector = $(this).attr("data-attr");
+        apiSelector = parseInt($(this).attr("data-attr"));
         console.log(apiSelector);
+
+        $(this).addClass("is-hovered");
+        if (apiSelector === 0) {
+            $("#beer, #music").removeClass("is-hovered");
+        } else if (apiSelector === 1) {
+            $("#restaurant, #music").removeClass("is-hovered");
+            console.log("remove hover");
+        } else if (apiSelector === 2) {
+            $("#restaurant, #beer").removeClass("is-hovered");
+        }
+
+
     });
 
     //places auto complete
@@ -52,7 +63,7 @@ $(document).ready(function() {
             lng = results[0].geometry.location.lng();
             console.log(lat, lng);
 
-            var queryURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}&term=restaurant`;
+            var queryURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}&term=brewery`;
             console.log(queryURL);
 
             $.ajax({
