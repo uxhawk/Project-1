@@ -14,7 +14,7 @@ $(document).ready(function() {
         $(this).addClass("is-hovered");
         if (apiSelector === 0) {
             $("#beer, #music").removeClass("is-hovered");
-            searchTerm = "restaurants";
+            searchTerm = "Restaurants";
         } else if (apiSelector === 1) {
             $("#restaurant, #music").removeClass("is-hovered");
             console.log("remove hover");
