@@ -3,9 +3,13 @@ $(document).ready(function() {
     var city, lat, lng, lat, lng;
     var apiSelector = 0;
     var searchTerm = "Restaurants";
+    var showSearch = false;
 
     $("#results-table").hide();
     $("#weather").hide();
+    $("#pac-input").hide();
+    $("#search-btn").hide();
+
 
     //click event listener for favorite hearts
     $(document).on("click", ".favorite", function() {
@@ -16,6 +20,12 @@ $(document).ready(function() {
     $(document).on("click", ".toggle", function() {
         apiSelector = parseInt($(this).attr("data-attr"));
         console.log(apiSelector);
+
+        if (showSearch === false) {
+
+            animateInputs();
+            showSearch = true;
+        }
 
         $(this).addClass("is-hovered");
         if (apiSelector === 0) {
@@ -162,7 +172,34 @@ $(document).ready(function() {
         return iconCode;
     }
 
+    //GSAP Animations
+    gsap.from(".anim-1", {
+        opacity: 0,
+        duration: 1,
+        x: -500,
+        ease: 'Elastic.easeInOut',
+        stagger: 0.3
+    });
 
+    gsap.from(".anim-2", {
+        opacity: 0,
+        duration: 1,
+        y: 5000,
+        ease: 'Power2.easeInOut',
+        delay: .3,
+        stagger: 0.2
+    });
 
+    function animateInputs() {
+        $("#pac-input").show();
+        $("#search-btn").show();
+        gsap.from(".anim-3", {
+            opacity: 0,
+            duration: .3,
+            y: 900,
+            ease: 'Power2.easeInOut',
+            stagger: 0.1
+        });
+    }
 
 });
