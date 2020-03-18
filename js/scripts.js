@@ -81,7 +81,7 @@ $(document).ready(function() {
                 console.log(response);
                 $("#search-btn").removeClass("is-loading");
                 $("#results-table").show();
-                $("#event-type-th").text(yelpTerm);
+                $("#event-type-th").text(searchTerm);
                 $("#event-city-th").text(city);
                 $("#search-results").empty();
 
