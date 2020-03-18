@@ -10,8 +10,6 @@ $(document).ready(function() {
     //click event listener for favorite hearts
     $(document).on("click", ".favorite", function() {
         console.log("you clicked a favorite");
-
-
     });
 
     //click event listener for event toggles
@@ -48,6 +46,8 @@ $(document).ready(function() {
         if (city === "") {
             return
         }
+        $("#results-table").hide();
+        $("#weather").hide();
         $("#search-btn").addClass("is-loading");
         var request = {
             query: city
@@ -97,7 +97,7 @@ $(document).ready(function() {
                 for (let i = 0; i < 19; i++) {
 
                     var resultsRow = $(`<tr>
-                    <td id="result${i}">
+                    <td id="result-${i}">
                     <div class="columns is-mobile is-multiline">
                         <div class="column is-one-third"><img
                                 src="${response.businesses[i].image_url}"
