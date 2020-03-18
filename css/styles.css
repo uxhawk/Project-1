@@ -336,7 +336,7 @@ body .toggle {
   border: 2px solid white;
 }
 
-body .deselected {
-  color: red;
+#query-results .level {
+  margin-bottom: 0px;
 }
 /*# sourceMappingURL=styles.css.map */
