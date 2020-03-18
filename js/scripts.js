@@ -92,6 +92,7 @@ $(document).ready(function() {
                 $("#event-type-th").text(searchTerm);
                 $("#event-city-th").text(city);
                 $("#search-results").empty();
+                $("#weather").empty();
                 $("#weather").show();
                 for (let i = 0; i < 19; i++) {
 
