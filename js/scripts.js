@@ -2,6 +2,7 @@ $(document).ready(function() {
     var favorites = [];
     var city, lat, lng, lat, lng;
     var apiSelector = 0;
+    var yelpTerm = "restaurant";
 
     $("#results-table").hide();
 
@@ -13,9 +14,11 @@ $(document).ready(function() {
         $(this).addClass("is-hovered");
         if (apiSelector === 0) {
             $("#beer, #music").removeClass("is-hovered");
+            yelpTerm = "restaurant";
         } else if (apiSelector === 1) {
             $("#restaurant, #music").removeClass("is-hovered");
             console.log("remove hover");
+            yelpTerm = "brewery";
         } else if (apiSelector === 2) {
             $("#restaurant, #beer").removeClass("is-hovered");
         }
@@ -63,7 +66,7 @@ $(document).ready(function() {
             lng = results[0].geometry.location.lng();
             console.log(lat, lng);
 
-            var queryURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}&term=brewery`;
+            var queryURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}&term=${yelpTerm}`;
             console.log(queryURL);
 
             $.ajax({
