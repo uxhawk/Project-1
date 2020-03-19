@@ -329,7 +329,7 @@ body {
 }
 
 body .push {
-  height: 400px;
+  height: 700px;
 }
 
 body #search-results {
@@ -344,7 +344,7 @@ body .toggle {
   margin-bottom: 0px;
 }
 
-#query-results .concert-img {
+#query-results .event-img {
   width: 400px;
 }
 /*# sourceMappingURL=styles.css.map */
