@@ -16,6 +16,10 @@ $(document).ready(function() {
         console.log("you clicked a favorite");
     });
 
+    $(document).on("click", ".fa-arrow-left", function() {
+        console.log("you clicked back");
+    });
+
     //click event listener for event toggles
     $(document).on("click", ".toggle", function() {
         apiSelector = parseInt($(this).attr("data-attr"));
@@ -96,7 +100,6 @@ $(document).ready(function() {
                 method: 'GET',
                 dataType: 'json'
             }).then(function(response) {
-                $("#landing").hide();
                 console.log(response);
                 $("#search-btn").removeClass("is-loading");
                 $("#event-type-th").text(searchTerm);
@@ -139,6 +142,7 @@ $(document).ready(function() {
                     $("#search-results").append(resultsRow);
                 }
                 $("#results-table").show();
+                scrollToAnchor();
             });
 
             var weatherURL = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=imperial&appid=3ccf586db422a1812c96a52bbfafc856`;
@@ -150,15 +154,13 @@ $(document).ready(function() {
                 $("#weather").empty();
                 var iconCode = response.weather[0].icon;
                 var iconURL = `https://openweathermap.org/img/wn/${formatIcon(iconCode)}d.png`;
-                var p1 = $(`<p class="is-size-5"><i class="fas fa-arrow-left"></i>Current Weather in <span id="city-weather">${city}</span></p>`);
+                var p1 = $(`<p class="is-size-5"></i>Current Weather in <span id="city-weather">${city}</span></p>`);
                 var p2 = $(`<p id="cur-temp" class="is-size-3 level-item">${Math.round(response.main.temp)}&#730F<img src="${iconURL}" alt="Weather icon"></p>`);
                 $("#weather").append(p1);
                 $("#weather").append(p2);
             });
             //all ajax functions should be above this last curly bracket
         }
-        animateTableIn();
-        animateTable2();
     }
 
     function formatIcon(code) {
@@ -202,23 +204,10 @@ $(document).ready(function() {
         });
     }
 
-    function animateTableIn() {
-        gsap.to("#h1-title, #h2-desc, #h3-desc, #beer, #music, #restaurant, #pac-input, #search-btn", {
-            y: -1000,
-            duration: .5,
-            stagger: 0.05,
-        });
-
+    function scrollToAnchor() {
+        var anchor = $("#weather");
+        $("html, body").animate({
+            scrollTop: anchor.offset().top
+        }, 'slow');
     }
-
-    function animateTable2() {
-
-        gsap.from(".anim-4", {
-            duration: .5,
-            y: 500,
-            ease: 'Power2.easeInOut',
-        });
-    }
-
-
 });
