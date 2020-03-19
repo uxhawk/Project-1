@@ -118,7 +118,7 @@ $(document).ready(function() {
                                     <h2 class="is-size-4 has-text-grey-dark">${response.businesses[i].name}</h2>
                                 </div>
                                 <div class="level-right p-r-md">
-                                    <i class="far fa-heart favorite" selected="0"></i>
+                                    <i class="far fa-heart favorite" data-index="${i}"></i>
                                 </div>
                             </div>
                             <p class="is-size-6 has-text-grey-light m-b-sm m-t-xxs">
@@ -150,7 +150,7 @@ $(document).ready(function() {
                 $("#weather").empty();
                 var iconCode = response.weather[0].icon;
                 var iconURL = `https://openweathermap.org/img/wn/${formatIcon(iconCode)}d.png`;
-                var p1 = $(`<p class="is-size-5">Current Weather in <span id="city-weather">${city}</span></p>`);
+                var p1 = $(`<p class="is-size-5"><i class="fas fa-arrow-left"></i>Current Weather in <span id="city-weather">${city}</span></p>`);
                 var p2 = $(`<p id="cur-temp" class="is-size-3 level-item">${Math.round(response.main.temp)}&#730F<img src="${iconURL}" alt="Weather icon"></p>`);
                 $("#weather").append(p1);
                 $("#weather").append(p2);
