@@ -13,17 +13,16 @@ $(document).ready(function() {
 
     //click event listener for favorite hearts
     $(document).on("click", ".favorite", function() {
-        console.log("you clicked a favorite");
+        //console.log("you clicked a favorite");
     });
 
     $(document).on("click", ".fa-arrow-left", function() {
-        console.log("you clicked back");
+
     });
 
     //click event listener for event toggles
     $(document).on("click", ".toggle", function() {
         apiSelector = parseInt($(this).attr("data-attr"));
-        console.log(apiSelector);
 
         if (showSearch === false) {
 
@@ -37,7 +36,6 @@ $(document).ready(function() {
             searchTerm = "Restaurants";
         } else if (apiSelector === 1) {
             $("#restaurant, #music").removeClass("is-hovered");
-            console.log("remove hover");
             searchTerm = "Breweries";
         } else if (apiSelector === 2) {
             $("#restaurant, #beer").removeClass("is-hovered");
@@ -87,10 +85,8 @@ $(document).ready(function() {
 
             lat = results[0].geometry.location.lat();
             lng = results[0].geometry.location.lng();
-            console.log(lat, lng);
 
             var queryURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}&term=${searchTerm}`;
-            console.log(queryURL);
 
             $.ajax({
                 url: queryURL,
@@ -100,7 +96,7 @@ $(document).ready(function() {
                 method: 'GET',
                 dataType: 'json'
             }).then(function(response) {
-                console.log(response);
+                //console.log(response);
                 $("#search-btn").removeClass("is-loading");
                 $("#event-type-th").text(searchTerm);
                 $("#event-city-th").text(city);
@@ -167,7 +163,6 @@ $(document).ready(function() {
         var arr = code.split("");
         arr.pop();
         iconCode = arr.join("");
-        // console.log(iconCode);
         return iconCode;
     }
 
