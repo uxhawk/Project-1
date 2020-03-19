@@ -318,6 +318,10 @@
   padding-left: 8rem;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Montserrat';
   margin: 0;

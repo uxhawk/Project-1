@@ -3,21 +3,29 @@ $(document).ready(function() {
     var city, lat, lng, lat, lng;
     var apiSelector = 0;
     var searchTerm = "Restaurants";
+    var showSearch = false;
 
     $("#results-table").hide();
     $("#weather").hide();
+    $("#pac-input").hide();
+    $("#search-btn").hide();
+
 
     //click event listener for favorite hearts
     $(document).on("click", ".favorite", function() {
         console.log("you clicked a favorite");
-
-
     });
 
     //click event listener for event toggles
     $(document).on("click", ".toggle", function() {
         apiSelector = parseInt($(this).attr("data-attr"));
         console.log(apiSelector);
+
+        if (showSearch === false) {
+
+            animateInputsIn();
+            showSearch = true;
+        }
 
         $(this).addClass("is-hovered");
         if (apiSelector === 0) {
@@ -48,6 +56,8 @@ $(document).ready(function() {
         if (city === "") {
             return
         }
+        $("#results-table").hide();
+        $("#weather").hide();
         $("#search-btn").addClass("is-loading");
         var request = {
             query: city
@@ -86,18 +96,17 @@ $(document).ready(function() {
                 method: 'GET',
                 dataType: 'json'
             }).then(function(response) {
+                $("#landing").hide();
                 console.log(response);
                 $("#search-btn").removeClass("is-loading");
-                $("#results-table").show();
                 $("#event-type-th").text(searchTerm);
                 $("#event-city-th").text(city);
                 $("#search-results").empty();
-
                 $("#weather").show();
-                for (let i = 0; i < 19; i++) {
 
-                    var resultsRow = $(`<tr>
-                    <td id="result${i}">
+                for (let i = 0; i < 19; i++) {
+                    var resultsRow = $(`<tr class="anim-4">
+                    <td id="result-${i}">
                     <div class="columns is-mobile is-multiline">
                         <div class="column is-one-third"><img
                                 src="${response.businesses[i].image_url}"
@@ -109,7 +118,7 @@ $(document).ready(function() {
                                     <h2 class="is-size-4 has-text-grey-dark">${response.businesses[i].name}</h2>
                                 </div>
                                 <div class="level-right p-r-md">
-                                    <i class="far fa-heart favorite" selected="0"></i>
+                                    <i class="far fa-heart favorite" data-index="${i}"></i>
                                 </div>
                             </div>
                             <p class="is-size-6 has-text-grey-light m-b-sm m-t-xxs">
@@ -129,6 +138,7 @@ $(document).ready(function() {
 
                     $("#search-results").append(resultsRow);
                 }
+                $("#results-table").show();
             });
 
             var weatherURL = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=imperial&appid=3ccf586db422a1812c96a52bbfafc856`;
@@ -140,18 +150,15 @@ $(document).ready(function() {
                 $("#weather").empty();
                 var iconCode = response.weather[0].icon;
                 var iconURL = `https://openweathermap.org/img/wn/${formatIcon(iconCode)}d.png`;
-                var p1 = $(`<p class="is-size-5">Current Weather in <span id="city-weather">${city}</span></p>`);
+                var p1 = $(`<p class="is-size-5"><i class="fas fa-arrow-left"></i>Current Weather in <span id="city-weather">${city}</span></p>`);
                 var p2 = $(`<p id="cur-temp" class="is-size-3 level-item">${Math.round(response.main.temp)}&#730F<img src="${iconURL}" alt="Weather icon"></p>`);
                 $("#weather").append(p1);
                 $("#weather").append(p2);
-
-
-
-
             });
-
             //all ajax functions should be above this last curly bracket
         }
+        animateTableIn();
+        animateTable2();
     }
 
     function formatIcon(code) {
@@ -162,7 +169,56 @@ $(document).ready(function() {
         return iconCode;
     }
 
+    //GSAP Animations
+    //header
+    gsap.from(".anim-1", {
+        opacity: 0,
+        duration: 1,
+        x: -500,
+        ease: 'Elastic.easeInOut',
+        stagger: 0.3
+    });
 
+    //value prop
+    gsap.from(".anim-2", {
+        opacity: 0,
+        duration: 1,
+        y: 5000,
+        ease: 'Power2.easeInOut',
+        delay: .3,
+        stagger: 0.2
+    });
+
+    //input fields
+    function animateInputsIn() {
+        $("#pac-input").show();
+        $("#search-btn").show();
+        gsap.from(".anim-3", {
+            opacity: 0,
+            duration: .3,
+            y: 900,
+            ease: 'Power2.easeInOut',
+            stagger: 0.1
+        });
+    }
+
+    function animateTableIn() {
+        gsap.to("#h1-title, #h2-desc, #h3-desc, #beer, #music, #restaurant, #pac-input, #search-btn", {
+            y: -1000,
+            duration: .5,
+            stagger: 0.05,
+        });
+
+    }
+
+    function animateTable2() {
+
+        gsap.from(".anim-4", {
+            duration: .5,
+            y: 500,
+            ease: 'Power2.easeInOut',
+        });
+    }
 
 
 });
