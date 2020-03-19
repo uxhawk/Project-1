@@ -40,6 +40,7 @@ $(document).ready(function() {
         } else if (apiSelector === 2) {
             $("#restaurant, #beer").removeClass("is-hovered");
             searchTerm = "Concerts";
+            console.log(apiSelector);
         }
 
 
@@ -86,60 +87,109 @@ $(document).ready(function() {
             lat = results[0].geometry.location.lat();
             lng = results[0].geometry.location.lng();
 
+
             var queryURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}&term=${searchTerm}`;
 
-            $.ajax({
-                url: queryURL,
-                headers: {
-                    'Authorization': 'Bearer sP1TEnIO70-vlxbP1_XhMbHHVmAl3E4f6KAxS8-abCdCwdazlP8l6yKj9gPEjUkbFximC8S_AcB9U-WQi87lR28UT613l55rFoLQ2Gis6jBgr2k31TL-pZVrxEFxXnYx',
-                },
-                method: 'GET',
-                dataType: 'json'
-            }).then(function(response) {
-                //console.log(response);
-                $("#search-btn").removeClass("is-loading");
-                $("#event-type-th").text(searchTerm);
-                $("#event-city-th").text(city);
-                $("#search-results").empty();
-                $("#weather").show();
+            var eventURL = `https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&apikey=nlha7A86hmR12YOlaa17AwPtVyVRCa0B&latlong=${lat},${lng}`;
 
-                for (let i = 0; i < 19; i++) {
-                    var resultsRow = $(`<tr class="anim-4">
-                    <td id="result-${i}">
-                    <div class="columns is-mobile is-multiline">
-                        <div class="column is-one-third"><img
-                                src="${response.businesses[i].image_url}"
-                                alt="">
-                        </div>
-                        <div class="column is-two-thirds has-text-left p-l-md">
-                            <div class="level p-b-none m-b-none">
-                                <div class="level-left">
-                                    <h2 class="is-size-4 has-text-grey-dark">${response.businesses[i].name}</h2>
-                                </div>
-                                <div class="level-right p-r-md">
-                                    <i class="far fa-heart favorite" data-index="${i}"></i>
-                                </div>
+            if (apiSelector === 0 || apiSelector === 1) {
+                $.ajax({
+                    url: queryURL,
+                    headers: {
+                        'Authorization': 'Bearer sP1TEnIO70-vlxbP1_XhMbHHVmAl3E4f6KAxS8-abCdCwdazlP8l6yKj9gPEjUkbFximC8S_AcB9U-WQi87lR28UT613l55rFoLQ2Gis6jBgr2k31TL-pZVrxEFxXnYx',
+                    },
+                    method: 'GET',
+                    dataType: 'json'
+                }).then(function(response) {
+                    formatTable();
+                    $("#search-btn").removeClass("is-loading");
+
+                    for (let i = 0; i < 19; i++) {
+                        var resultsRow = $(`<tr class="anim-4">
+                        <td id="result-${i}">
+                        <div class="columns is-mobile is-multiline">
+                            <div class="column is-one-third"><img class="event-img"
+                                    src="${response.businesses[i].image_url}"
+                                    alt="">
                             </div>
-                            <p class="is-size-6 has-text-grey-light m-b-sm m-t-xxs">
-                                ${response.businesses[i].categories[0].title}</p>
-                            <p class="is-size-6 has-text-grey-dark m-t-sm">Rating: <span id="rating${i}"
-                                    class="p-l-sm p-r-xs">${response.businesses[i].rating}</span><i class="fas fa-star"></i>
-                                    </p>
-                                    <p class="is-size-6 has-text-grey-dark m-t-xxs">Reviews: <span class="p-l-sm">${response.businesses[i].review_count}</span>
-                                    </p>
-                            
-                            <a target="blank" href="https://maps.google.com/?q=${response.businesses[i].location.address1}">${response.businesses[i].location.address1} <span
-                                    class="is-size-4"><i class="fas fa-directions p-l-xs"></i></span></a>
+                            <div class="column is-two-thirds has-text-left p-l-md">
+                                <div class="level p-b-none m-b-none">
+                                    <div class="level-left">
+                                        <h2 class="is-size-4 has-text-grey-dark">${response.businesses[i].name}</h2>
+                                    </div>
+                                    <div class="level-right p-r-md">
+                                        <i class="far fa-heart favorite" data-index="${i}"></i>
+                                    </div>
+                                </div>
+                                <p class="is-size-6 has-text-grey-light m-b-sm m-t-xxs">
+                                    ${response.businesses[i].categories[0].title}</p>
+                                <p class="is-size-6 has-text-grey-dark m-t-sm">Rating: <span id="rating${i}"
+                                        class="p-l-sm p-r-xs">${response.businesses[i].rating}</span><i class="fas fa-star"></i>
+                                        </p>
+                                        <p class="is-size-6 has-text-grey-dark m-t-xxs">Reviews: <span class="p-l-sm">${response.businesses[i].review_count}</span>
+                                        </p>
+                                
+                                <a target="blank" href="https://maps.google.com/?q=${response.businesses[i].location.address1}">${response.businesses[i].location.address1} <span
+                                        class="is-size-4"><i class="fas fa-directions p-l-xs"></i></span></a>
+                            </div>
                         </div>
-                    </div>
-                </td>
-                    </tr>`);
+                    </td>
+                        </tr>`);
 
-                    $("#search-results").append(resultsRow);
-                }
-                $("#results-table").show();
-                scrollToAnchor();
-            });
+                        $("#search-results").append(resultsRow);
+                    }
+                    $("#results-table").show();
+                    scrollToAnchor();
+                });
+            } else if (apiSelector === 2) {
+                $.ajax({
+                    url: eventURL,
+                    method: 'GET',
+                    async: true,
+                    dataType: "json",
+                }).then(function(response) {
+                    formatTable();
+                    $("#search-btn").removeClass("is-loading");
+
+                    for (let i = 0; i < 19; i++) {
+                        var resultsRow = $(`<tr class="anim-4">
+                        <td id="result-${i}">
+                        <div class="columns is-mobile is-multiline">
+                            <div class="column is-one-third"><img class="event-img"
+                                    src="${response._embedded.events[i].images[2].url}"
+                                    alt="">
+                            </div>
+                            <div class="column is-two-thirds has-text-left p-l-md">
+                                <div class="level p-b-none m-b-none">
+                                    <div class="level-left">
+                                        <h2 class="is-size-4 has-text-grey-dark">${response._embedded.events[i].name}</h2>
+                                    </div>
+                                    <div class="level-right p-r-md">
+                                        <i class="far fa-heart favorite" data-index="${i}"></i>
+                                    </div>
+                                </div>
+                                <p class="is-size-6 has-text-grey-light m-b-sm m-t-xxs">
+                                    ${response._embedded.events[i].classifications[0].genre.name}</p>
+                                   
+                                    <p class="is-size-6 has-text-grey-dark m-t-sm">Date: <span id="date-${i}"
+                                    class="p-l-sm p-r-xs">${response._embedded.events[i].dates.start.localDate}</span>
+                                    </p>
+                                    
+                                    
+                                <a target="blank" href="${response._embedded.events[i].url}"> Get Tickets<span
+                                        class="is-size-4"><i class="fas fa-ticket-alt p-l-xs"></i></span></a>
+                            </div>
+                        </div>
+                    </td>
+                        </tr>`);
+
+                        $("#search-results").append(resultsRow);
+                    }
+                    $("#results-table").show();
+                    scrollToAnchor();
+                });
+            }
+
 
             var weatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=imperial&appid=3ccf586db422a1812c96a52bbfafc856`;
 
@@ -156,18 +206,12 @@ $(document).ready(function() {
                 $("#weather").append(p2);
             });
 
-            
-            var eventURL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=nlha7A86hmR12YOlaa17AwPtVyVRCa0B&latlong="+ lat + "," + lng
 
-            $.ajax({
-                url: eventURL,
-                method: 'GET',
-                async: true,
-                dataType: "json",
-            }).then(function(response) {
-                console.log(response);
-            
-            });
+            //ticketmaster
+
+
+
+
 
             //all ajax functions should be above this last curly bracket
         }
@@ -219,4 +263,13 @@ $(document).ready(function() {
             scrollTop: anchor.offset().top
         }, 'slow');
     }
+
+    function formatTable() {
+        $("#event-type-th").text(searchTerm);
+        $("#event-city-th").text(city);
+        $("#search-results").empty();
+        $("#weather").show();
+    }
+
+
 });

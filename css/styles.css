@@ -343,4 +343,8 @@ body .toggle {
 #query-results .level {
   margin-bottom: 0px;
 }
+
+#query-results .concert-img {
+  width: 400px;
+}
 /*# sourceMappingURL=styles.css.map */
