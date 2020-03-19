@@ -155,6 +155,20 @@ $(document).ready(function() {
                 $("#weather").append(p1);
                 $("#weather").append(p2);
             });
+
+            
+            var eventURL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=nlha7A86hmR12YOlaa17AwPtVyVRCa0B&latlong="+ lat + "," + lng
+
+            $.ajax({
+                url: eventURL,
+                method: 'GET',
+                async: true,
+                dataType: "json",
+            }).then(function(response) {
+                console.log(response);
+            
+            });
+
             //all ajax functions should be above this last curly bracket
         }
     }
