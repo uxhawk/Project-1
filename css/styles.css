@@ -340,6 +340,10 @@ body .toggle {
   border: 2px solid white;
 }
 
+body .glasses {
+  width: 200px;
+}
+
 #query-results .level {
   margin-bottom: 0px;
 }
