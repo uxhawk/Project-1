@@ -145,7 +145,7 @@ $(document).ready(function() {
                 scrollToAnchor();
             });
 
-            var weatherURL = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=imperial&appid=3ccf586db422a1812c96a52bbfafc856`;
+            var weatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=imperial&appid=3ccf586db422a1812c96a52bbfafc856`;
 
             $.ajax({
                 url: weatherURL,
