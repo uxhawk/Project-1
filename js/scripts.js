@@ -3,21 +3,32 @@ $(document).ready(function() {
     var city, lat, lng, lat, lng;
     var apiSelector = 0;
     var searchTerm = "Restaurants";
+    var showSearch = false;
 
     $("#results-table").hide();
     $("#weather").hide();
+    $("#pac-input").hide();
+    $("#search-btn").hide();
+
 
     //click event listener for favorite hearts
     $(document).on("click", ".favorite", function() {
-        console.log("you clicked a favorite");
+        //console.log("you clicked a favorite");
+    });
 
+    $(document).on("click", ".fa-arrow-left", function() {
 
     });
 
     //click event listener for event toggles
     $(document).on("click", ".toggle", function() {
         apiSelector = parseInt($(this).attr("data-attr"));
-        console.log(apiSelector);
+
+        if (showSearch === false) {
+
+            animateInputsIn();
+            showSearch = true;
+        }
 
         $(this).addClass("is-hovered");
         if (apiSelector === 0) {
@@ -25,7 +36,6 @@ $(document).ready(function() {
             searchTerm = "Restaurants";
         } else if (apiSelector === 1) {
             $("#restaurant, #music").removeClass("is-hovered");
-            console.log("remove hover");
             searchTerm = "Breweries";
         } else if (apiSelector === 2) {
             $("#restaurant, #beer").removeClass("is-hovered");
@@ -48,6 +58,8 @@ $(document).ready(function() {
         if (city === "") {
             return
         }
+        $("#results-table").hide();
+        $("#weather").hide();
         $("#search-btn").addClass("is-loading");
         var request = {
             query: city
@@ -73,10 +85,8 @@ $(document).ready(function() {
 
             lat = results[0].geometry.location.lat();
             lng = results[0].geometry.location.lng();
-            console.log(lat, lng);
 
             var queryURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}&term=${searchTerm}`;
-            console.log(queryURL);
 
             $.ajax({
                 url: queryURL,
@@ -86,18 +96,16 @@ $(document).ready(function() {
                 method: 'GET',
                 dataType: 'json'
             }).then(function(response) {
-                console.log(response);
+                //console.log(response);
                 $("#search-btn").removeClass("is-loading");
-                $("#results-table").show();
                 $("#event-type-th").text(searchTerm);
                 $("#event-city-th").text(city);
                 $("#search-results").empty();
-
                 $("#weather").show();
-                for (let i = 0; i < 19; i++) {
 
-                    var resultsRow = $(`<tr>
-                    <td id="result${i}">
+                for (let i = 0; i < 19; i++) {
+                    var resultsRow = $(`<tr class="anim-4">
+                    <td id="result-${i}">
                     <div class="columns is-mobile is-multiline">
                         <div class="column is-one-third"><img
                                 src="${response.businesses[i].image_url}"
@@ -109,7 +117,7 @@ $(document).ready(function() {
                                     <h2 class="is-size-4 has-text-grey-dark">${response.businesses[i].name}</h2>
                                 </div>
                                 <div class="level-right p-r-md">
-                                    <i class="far fa-heart favorite" selected="0"></i>
+                                    <i class="far fa-heart favorite" data-index="${i}"></i>
                                 </div>
                             </div>
                             <p class="is-size-6 has-text-grey-light m-b-sm m-t-xxs">
@@ -129,9 +137,11 @@ $(document).ready(function() {
 
                     $("#search-results").append(resultsRow);
                 }
+                $("#results-table").show();
+                scrollToAnchor();
             });
 
-            var weatherURL = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=imperial&appid=3ccf586db422a1812c96a52bbfafc856`;
+            var weatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=imperial&appid=3ccf586db422a1812c96a52bbfafc856`;
 
             $.ajax({
                 url: weatherURL,
@@ -140,15 +150,12 @@ $(document).ready(function() {
                 $("#weather").empty();
                 var iconCode = response.weather[0].icon;
                 var iconURL = `https://openweathermap.org/img/wn/${formatIcon(iconCode)}d.png`;
-                var p1 = $(`<p class="is-size-5">Current Weather in <span id="city-weather">${city}</span></p>`);
+                var p1 = $(`<p class="is-size-5"></i>Current Weather in <span id="city-weather">${city}</span></p>`);
                 var p2 = $(`<p id="cur-temp" class="is-size-3 level-item">${Math.round(response.main.temp)}&#730F<img src="${iconURL}" alt="Weather icon"></p>`);
                 $("#weather").append(p1);
                 $("#weather").append(p2);
-
-
-
-
             });
+
             
             var eventURL = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=nlha7A86hmR12YOlaa17AwPtVyVRCa0B&latlong="+ lat + "," + lng
 
@@ -170,11 +177,46 @@ $(document).ready(function() {
         var arr = code.split("");
         arr.pop();
         iconCode = arr.join("");
-        // console.log(iconCode);
         return iconCode;
     }
 
+    //GSAP Animations
+    //header
+    gsap.from(".anim-1", {
+        opacity: 0,
+        duration: 1,
+        x: -500,
+        ease: 'Elastic.easeInOut',
+        stagger: 0.3
+    });
 
+    //value prop
+    gsap.from(".anim-2", {
+        opacity: 0,
+        duration: 1,
+        y: 5000,
+        ease: 'Power2.easeInOut',
+        delay: .3,
+        stagger: 0.2
+    });
 
+    //input fields
+    function animateInputsIn() {
+        $("#pac-input").show();
+        $("#search-btn").show();
+        gsap.from(".anim-3", {
+            opacity: 0,
+            duration: .3,
+            y: 900,
+            ease: 'Power2.easeInOut',
+            stagger: 0.1
+        });
+    }
 
+    function scrollToAnchor() {
+        var anchor = $("#weather");
+        $("html, body").animate({
+            scrollTop: anchor.offset().top
+        }, 'slow');
+    }
 });

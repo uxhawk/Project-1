@@ -29,23 +29,25 @@
 
 <body>
 
-    <section class="section is-small">
+    <section id="landing" class="section is-small">
         <div class="container">
             <div class="columns">
                 <div class="column is-6 is-offset-3">
-                    <h1 class="title is-uppercase has-text-centered is-size-1 has-text-white">Cool Things</h1>
-                    <h2 class="has-text-centered is-size-4 has-text-white">Grub | Beer | Music</h2>
+                    <h1 id="h1-title" class="anim-1 title is-uppercase has-text-centered is-size-1 has-text-white">
+                        Cool Things
+                    </h1>
+                    <h2 id="h2-desc" class="anim-1 has-text-centered is-size-4 has-text-white">Grub | Beer | Music</h2>
                     <div class="has-text-centered m-t-xxl m-b-sm">
-                        <h3 class="is-size-5 has-text-white">Select a Cool Thing</h3>
+                        <h3 id="h3-desc" class="anim-2 is-size-5 has-text-white">Select a Cool Thing</h3>
                         <button id="restaurant"
-                            class="button is-primary is-inverted is-outlined has-border-white is-rounded toggle m-sm is-medium is-hovered"
+                            class="anim-2 button is-primary is-inverted is-outlined has-border-white is-rounded toggle m-sm is-medium"
                             data-attr="0">
                             <span class="icon is-small">
                                 <i class="fas fa-utensils"></i>
                             </span>
                         </button>
                         <button id="beer"
-                            class="button is-primary is-inverted is-outlined is-rounded toggle m-sm is-medium is-active"
+                            class="anim-2 button is-primary is-inverted is-outlined is-rounded toggle m-sm is-medium is-active"
                             data-attr="1">
                             <span class="icon is-small">
                                 <i class="fas fa-beer"></i>
@@ -53,29 +55,29 @@
                         </button>
 
                         <button id="music"
-                            class="button is-primary is-inverted is-outlined is-rounded toggle m-sm is-medium"
+                            class="anim-2 button is-primary is-inverted is-outlined is-rounded toggle m-sm is-medium"
                             data-attr="2">
                             <span class="icon is-small">
                                 <i class="fas fa-music"></i>
                             </span>
                         </button>
                     </div>
-                    <input id="pac-input" class="input is-rounded is-large m-t-sm m-b-sm" type="text"
+                    <input id="pac-input" class="anim-3 input is-rounded is-large m-t-sm m-b-sm" type="text"
                         placeholder="City">
                     <button id="search-btn"
-                        class="button is-medium is-rounded is-primary is-fullwidth m-t-sm m-b-xl ">Show Me Cool
+                        class="anim-3 button is-medium is-rounded is-primary is-fullwidth m-t-sm m-b-xl ">Show Me Cool
                         Things</button>
 
                 </div>
             </div>
         </div>
     </section>
-    <section id="query-results">
+    <section id="query-results" class="p-t-lg">
         <div class="container">
             <div id="weather" class="has-text-centered has-text-white m-b-md">
 
             </div>
-            <table id="results-table" class="table is-striped is-fullwidth is-bordered is-hoverable m-b-xl">
+            <table id="results-table" class="anim-4 table is-striped is-fullwidth is-bordered is-hoverable m-b-xl">
                 <thead>
                     <tr>
                         <th class="has-text-centered is-selected">
@@ -108,6 +110,8 @@
             </p>
         </div>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.3/gsap.min.js"></script>
 </body>
 
 </html>

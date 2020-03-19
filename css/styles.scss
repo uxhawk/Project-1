@@ -57,6 +57,10 @@ $positions: (('t', 'top'),
     }
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
 
     font-family: 'Montserrat';
@@ -80,8 +84,8 @@ body {
 }
 
 #query-results {
+
     .level {
         margin-bottom: 0px;
-
     }
 }
