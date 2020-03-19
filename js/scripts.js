@@ -23,7 +23,7 @@ $(document).ready(function() {
 
         if (showSearch === false) {
 
-            animateInputs();
+            animateInputsIn();
             showSearch = true;
         }
 
@@ -96,17 +96,16 @@ $(document).ready(function() {
                 method: 'GET',
                 dataType: 'json'
             }).then(function(response) {
+                $("#landing").hide();
                 console.log(response);
                 $("#search-btn").removeClass("is-loading");
-                $("#results-table").show();
                 $("#event-type-th").text(searchTerm);
                 $("#event-city-th").text(city);
                 $("#search-results").empty();
-
                 $("#weather").show();
-                for (let i = 0; i < 19; i++) {
 
-                    var resultsRow = $(`<tr>
+                for (let i = 0; i < 19; i++) {
+                    var resultsRow = $(`<tr class="anim-4">
                     <td id="result-${i}">
                     <div class="columns is-mobile is-multiline">
                         <div class="column is-one-third"><img
@@ -139,6 +138,7 @@ $(document).ready(function() {
 
                     $("#search-results").append(resultsRow);
                 }
+                $("#results-table").show();
             });
 
             var weatherURL = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=imperial&appid=3ccf586db422a1812c96a52bbfafc856`;
@@ -154,14 +154,11 @@ $(document).ready(function() {
                 var p2 = $(`<p id="cur-temp" class="is-size-3 level-item">${Math.round(response.main.temp)}&#730F<img src="${iconURL}" alt="Weather icon"></p>`);
                 $("#weather").append(p1);
                 $("#weather").append(p2);
-
-
-
-
             });
-
             //all ajax functions should be above this last curly bracket
         }
+        animateTableIn();
+        animateTable2();
     }
 
     function formatIcon(code) {
@@ -173,6 +170,7 @@ $(document).ready(function() {
     }
 
     //GSAP Animations
+    //header
     gsap.from(".anim-1", {
         opacity: 0,
         duration: 1,
@@ -181,6 +179,7 @@ $(document).ready(function() {
         stagger: 0.3
     });
 
+    //value prop
     gsap.from(".anim-2", {
         opacity: 0,
         duration: 1,
@@ -190,7 +189,8 @@ $(document).ready(function() {
         stagger: 0.2
     });
 
-    function animateInputs() {
+    //input fields
+    function animateInputsIn() {
         $("#pac-input").show();
         $("#search-btn").show();
         gsap.from(".anim-3", {
@@ -201,5 +201,24 @@ $(document).ready(function() {
             stagger: 0.1
         });
     }
+
+    function animateTableIn() {
+        gsap.to("#h1-title, #h2-desc, #h3-desc, #beer, #music, #restaurant, #pac-input, #search-btn", {
+            y: -1000,
+            duration: .5,
+            stagger: 0.05,
+        });
+
+    }
+
+    function animateTable2() {
+
+        gsap.from(".anim-4", {
+            duration: .5,
+            y: 500,
+            ease: 'Power2.easeInOut',
+        });
+    }
+
 
 });
