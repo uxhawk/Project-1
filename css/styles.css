@@ -344,6 +344,27 @@ body .glasses {
   width: 200px;
 }
 
+body .test {
+  background: #ffffff;
+}
+
+body .results-card {
+  word-wrap: break-word;
+}
+
+body #section-2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+body .rotate {
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+
 #query-results .level {
   margin-bottom: 0px;
 }

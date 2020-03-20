@@ -5,8 +5,20 @@ $(document).ready(function() {
     var searchTerm = "Restaurants";
     var showSearch = false;
 
-    $("#results-table").hide();
-    $("#weather").hide();
+    var tl = gsap.timeline();
+    tl.to(".landing-el", {
+        duration: .2,
+        y: -900,
+        ease: 'Power2.easeInOut',
+        stagger: 0.05,
+    }).from(".section-2", {
+        y: 500,
+        opacity: 0,
+        duration: .3,
+        ease: 'Power2.easeInOut',
+    });
+    tl.pause();
+
     $("#pac-input").hide();
     $("#search-btn").hide();
 
@@ -16,8 +28,10 @@ $(document).ready(function() {
         //console.log("you clicked a favorite");
     });
 
-    $(document).on("click", ".fa-arrow-left", function() {
-
+    $(document).on("click", ".search-again", function() {
+        tl.reverse();
+        $("#landing").css("z-index", "99")
+        $("#section-2").css("z-index", "-1")
     });
 
     //click event listener for event toggles
@@ -25,7 +39,6 @@ $(document).ready(function() {
         apiSelector = parseInt($(this).attr("data-attr"));
 
         if (showSearch === false) {
-
             animateInputsIn();
             showSearch = true;
         }
@@ -42,8 +55,6 @@ $(document).ready(function() {
             searchTerm = "Concerts";
             console.log(apiSelector);
         }
-
-
     });
 
     //places auto complete
@@ -51,7 +62,6 @@ $(document).ready(function() {
     var options = {
         types: ['(cities)'],
     };
-
 
     $("#search-btn").click(function() {
         city = $("#pac-input").val();
@@ -87,7 +97,6 @@ $(document).ready(function() {
             lat = results[0].geometry.location.lat();
             lng = results[0].geometry.location.lng();
 
-
             var queryURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}&term=${searchTerm}`;
 
             var eventURL = `https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&apikey=nlha7A86hmR12YOlaa17AwPtVyVRCa0B&latlong=${lat},${lng}`;
@@ -101,45 +110,59 @@ $(document).ready(function() {
                     method: 'GET',
                     dataType: 'json'
                 }).then(function(response) {
-                    formatTable();
+                    $("#query-results").empty();
                     $("#search-btn").removeClass("is-loading");
-
-                    for (let i = 0; i < 19; i++) {
-                        var resultsRow = $(`<tr class="anim-4">
-                        <td id="result-${i}">
-                        <div class="columns is-mobile is-multiline">
-                            <div class="column is-one-third"><img class="event-img"
-                                    src="${response.businesses[i].image_url}"
-                                    alt="">
-                            </div>
-                            <div class="column is-two-thirds has-text-left p-l-md">
-                                <div class="level p-b-none m-b-none">
-                                    <div class="level-left">
-                                        <h2 class="is-size-4 has-text-grey-dark">${response.businesses[i].name}</h2>
-                                    </div>
-                                    <div class="level-right p-r-md">
-                                        <i class="far fa-heart favorite" data-index="${i}"></i>
-                                    </div>
+                    var cardHeader = $(`<div id="card-header" class="columns">
+                                <div class="column is-8 is-offset-2 test cards-container has-text-centered has-background-primary has-text-white has-text-weight-bold">
+                                    <p>${searchTerm} in ${city}</p>
                                 </div>
-                                <p class="is-size-6 has-text-grey-light m-b-sm m-t-xxs">
-                                    ${response.businesses[i].categories[0].title}</p>
-                                <p class="is-size-6 has-text-grey-dark m-t-sm">Rating: <span id="rating${i}"
+                                </div>`);
+                    var searchAgain = $(`<div id="search-again" class="has-text-centered anim-4 m-t-md m-b-lg">
+                                <button class="button is-primary is-inverted is-outlined is-rounded search-again">Search Again</button>
+                                </div>`);
+
+                    $("#query-results").append(searchAgain);
+                    $("#query-results").append(cardHeader);
+
+                    for (let i = 0; i < 9; i++) {
+                        var resultsCard = $(`<div class="columns cards-containers">
+                        <div class="column is-8 is-offset-2 test cards-container ">
+                            <div class="columns is-mobile">
+                                <div class="column is-one-third "><img class="event-img"
+                                        src="${response.businesses[i].image_url}"
+                                        alt="">
+                                </div>
+                                <div class="column is-two-thirds has-text-left p-l-md">
+                                    <div class=" p-b-none m-b-none">
+                                        <div class="columns is-mobile">
+                                            <div class="column is-four-fifths">
+                                                <h2 class="is-size-4 has-text-grey-dark results-card">${response.businesses[i].name}</h2>
+                                            </div>
+                                            <div class="column is-one-fifth has-text-right p-r-lg">
+                                                <i class="far fa-heart favorite" data-index="${i}"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="is-size-6 has-text-grey-light m-b-sm m-t-xxs"> ${response.businesses[i].categories[0].title}</p>
+                                    <p class="is-size-6 has-text-grey-dark m-t-sm">Rating: <span id="rating${i}"
                                         class="p-l-sm p-r-xs">${response.businesses[i].rating}</span><i class="fas fa-star"></i>
                                         </p>
                                         <p class="is-size-6 has-text-grey-dark m-t-xxs">Reviews: <span class="p-l-sm">${response.businesses[i].review_count}</span>
                                         </p>
-                                
-                                <a target="blank" href="https://maps.google.com/?q=${response.businesses[i].location.address1}">${response.businesses[i].location.address1} <span
+                                        <a target="blank" href="https://maps.google.com/?q=${response.businesses[i].location.address1}">${response.businesses[i].location.address1} <span
                                         class="is-size-4"><i class="fas fa-directions p-l-xs"></i></span></a>
+                                </div>
                             </div>
                         </div>
-                    </td>
-                        </tr>`);
+                    </div>`);
 
-                        $("#search-results").append(resultsRow);
+                        $("#query-results").append(resultsCard);
+
                     }
-                    $("#results-table").show();
-                    scrollToAnchor();
+                    tl.play();
+                    $("#landing").css("z-index", "-1");
+                    $("#section-2").css("z-index", "99");
+
                 });
             } else if (apiSelector === 2) {
                 $.ajax({
@@ -148,48 +171,58 @@ $(document).ready(function() {
                     async: true,
                     dataType: "json",
                 }).then(function(response) {
-                    formatTable();
+                    $("#query-results").empty();
                     $("#search-btn").removeClass("is-loading");
-
-                    for (let i = 0; i < 19; i++) {
-                        var resultsRow = $(`<tr class="anim-4">
-                        <td id="result-${i}">
-                        <div class="columns is-mobile is-multiline">
-                            <div class="column is-one-third"><img class="event-img"
-                                    src="${response._embedded.events[i].images[2].url}"
-                                    alt="">
-                            </div>
-                            <div class="column is-two-thirds has-text-left p-l-md">
-                                <div class="level p-b-none m-b-none">
-                                    <div class="level-left">
-                                        <h2 class="is-size-4 has-text-grey-dark">${response._embedded.events[i].name}</h2>
-                                    </div>
-                                    <div class="level-right p-r-md">
-                                        <i class="far fa-heart favorite" data-index="${i}"></i>
-                                    </div>
+                    var cardHeader = $(`<div id="card-header" class="columns">
+                                <div class="column is-8 is-offset-2 test cards-container has-text-centered has-background-primary has-text-white has-text-weight-bold">
+                                    <p>${searchTerm} in ${city}</p>
                                 </div>
-                                <p class="is-size-6 has-text-grey-light m-b-sm m-t-xxs">
-                                    ${response._embedded.events[i].classifications[0].genre.name}</p>
-                                   
-                                    <p class="is-size-6 has-text-grey-dark m-t-sm">Date: <span id="date-${i}"
+                                </div>`);
+                    var searchAgain = $(`<div id="search-again" class="has-text-centered anim-4 m-t-md m-b-lg">
+                                <button class="button is-primary is-inverted is-outlined is-rounded search-again">Search Again</button>
+                                </div>`);
+
+
+                    $("#query-results").append(searchAgain);
+                    $("#query-results").append(cardHeader);
+
+                    for (let i = 0; i < 9; i++) {
+                        var resultsCard = $(`<div class="columns">
+                        <div class="column is-8 is-offset-2 test cards-container ">
+                            <div class="columns is-mobile">
+                                <div class="column is-one-third "><img class="event-img"
+                                        src="${response._embedded.events[i].images[2].url}"
+                                        alt="">
+                                </div>
+                                <div class="column is-two-thirds has-text-left p-l-md">
+                                    <div class=" p-b-none m-b-none">
+                                        <div class="columns is-mobile">
+                                            <div class="column is-four-fifths">
+                                                <h2 class="is-size-4 has-text-grey-dark results-card">${response._embedded.events[i].name}</h2>
+                                            </div>
+                                            <div class="column is-one-fifth has-text-right p-r-lg">
+                                                <i class="far fa-heart favorite" data-index="${i}"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="is-size-6 has-text-grey-light m-b-sm m-t-xxs"> ${response._embedded.events[i].classifications[0].genre.name}</p>
+                                    Date: <span id="date-${i}"
                                     class="p-l-sm p-r-xs">${response._embedded.events[i].dates.start.localDate}</span>
                                     </p>
-                                    
-                                    
-                                <a target="blank" href="${response._embedded.events[i].url}"> Get Tickets<span
-                                        class="is-size-4"><i class="fas fa-ticket-alt p-l-xs"></i></span></a>
+                                    <a target="blank" href="${response._embedded.events[i].url}"> Get Tickets<span
+                                        class="is-size-4 p-l-xs"><i class="fas fa-ticket-alt p-l-sm rotate"></i></span></a>
+                                </div>
                             </div>
                         </div>
-                    </td>
-                        </tr>`);
+                    </div>`);
 
-                        $("#search-results").append(resultsRow);
+                        $("#query-results").append(resultsCard);
                     }
-                    $("#results-table").show();
-                    scrollToAnchor();
                 });
+                tl.play();
+                $("#landing").css("z-index", "-1");
+                $("#section-2").css("z-index", "99");
             }
-
 
             var weatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=imperial&appid=3ccf586db422a1812c96a52bbfafc856`;
 
@@ -197,22 +230,16 @@ $(document).ready(function() {
                 url: weatherURL,
                 method: 'GET'
             }).then(function(response) {
-                $("#weather").empty();
                 var iconCode = response.weather[0].icon;
                 var iconURL = `https://openweathermap.org/img/wn/${formatIcon(iconCode)}d.png`;
-                var p1 = $(`<p class="is-size-5"></i>Current Weather in <span id="city-weather">${city}</span></p>`);
-                var p2 = $(`<p id="cur-temp" class="is-size-3 level-item">${Math.round(response.main.temp)}&#730F<img src="${iconURL}" alt="Weather icon"></p>`);
-                $("#weather").append(p1);
-                $("#weather").append(p2);
+
+                var weatherDiv = $(`<div id="weather" class="weather-container has-text-centered has-text-white m-b-md anim-4">
+                <p class="is-size-5"></i>Current Weather in <span id="city-weather">${city}</span></p>
+                <p id="cur-temp" class="is-size-3 level-item">${Math.round(response.main.temp)}&#730F<img src="${iconURL}" alt="Weather icon"></p>
+                </div>`);
+
+                $("#section-2").prepend(weatherDiv);
             });
-
-
-            //ticketmaster
-
-
-
-
-
             //all ajax functions should be above this last curly bracket
         }
     }
@@ -237,14 +264,14 @@ $(document).ready(function() {
     //value prop
     gsap.from(".anim-2", {
         opacity: 0,
-        duration: 1,
-        y: 5000,
+        duration: .65,
+        y: 500,
         ease: 'Power2.easeInOut',
         delay: .3,
-        stagger: 0.2
+        stagger: 0.15
     });
 
-    //input fields
+    //input fields after toggle click
     function animateInputsIn() {
         $("#pac-input").show();
         $("#search-btn").show();
@@ -256,20 +283,4 @@ $(document).ready(function() {
             stagger: 0.1
         });
     }
-
-    function scrollToAnchor() {
-        var anchor = $("#weather");
-        $("html, body").animate({
-            scrollTop: anchor.offset().top
-        }, 'slow');
-    }
-
-    function formatTable() {
-        $("#event-type-th").text(searchTerm);
-        $("#event-city-th").text(city);
-        $("#search-results").empty();
-        $("#weather").show();
-    }
-
-
 });
