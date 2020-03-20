@@ -21,6 +21,8 @@ $(document).ready(function() {
 
     $("#pac-input").hide();
     $("#search-btn").hide();
+    $("#landing").css("z-index", "99")
+    $("#section-2").css("z-index", "-1")
 
 
     //click event listener for favorite hearts
@@ -30,8 +32,10 @@ $(document).ready(function() {
 
     $(document).on("click", ".search-again", function() {
         tl.reverse();
-        $("#landing").css("z-index", "99")
-        $("#section-2").css("z-index", "-1")
+        $("#landing").css("z-index", "99");
+        $("#section-2").css("z-index", "-1");
+        $("#section-2").hide();
+
     });
 
     //click event listener for event toggles
@@ -69,8 +73,8 @@ $(document).ready(function() {
         if (city === "") {
             return
         }
-        $("#results-table").hide();
-        $("#weather").hide();
+
+        $("#section-2").show();
         $("#search-btn").addClass("is-loading");
         var request = {
             query: city
@@ -157,7 +161,9 @@ $(document).ready(function() {
                     </div>`);
 
                         $("#query-results").append(resultsCard);
-
+                        if (i === 8) {
+                            resultsCard.css("margin-bottom", "40px");
+                        }
                     }
                     tl.play();
                     $("#landing").css("z-index", "-1");
@@ -217,6 +223,9 @@ $(document).ready(function() {
                     </div>`);
 
                         $("#query-results").append(resultsCard);
+                        if (i === 8) {
+                            resultsCard.css("margin-bottom", "40px");
+                        }
                     }
                 });
                 tl.play();
@@ -230,6 +239,7 @@ $(document).ready(function() {
                 url: weatherURL,
                 method: 'GET'
             }).then(function(response) {
+                $("#weather").empty();
                 var iconCode = response.weather[0].icon;
                 var iconURL = `https://openweathermap.org/img/wn/${formatIcon(iconCode)}d.png`;
 

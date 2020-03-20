@@ -62,10 +62,10 @@ html {
 }
 
 body {
-
+    min-height: 100vh;
     font-family: 'Montserrat';
     margin: 0;
-    background: color(primary);
+    background-color: color(primary);
 
     .push {
         height: 700px;
@@ -93,11 +93,22 @@ body {
         left: 0;
         right: 0;
         margin: auto;
+        background: color(primary);
+
+    }
+
+    .footer {
+        bottom: 0;
+
+        width: 100%;
+        margin-top: 80px;
+        z-index: 100;
     }
 
 }
 
 #query-results {
+
 
     .level {
         margin-bottom: 0px;

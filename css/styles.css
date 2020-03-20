@@ -323,9 +323,10 @@ html {
 }
 
 body {
+  min-height: 100vh;
   font-family: 'Montserrat';
   margin: 0;
-  background: #005dff;
+  background-color: #005dff;
 }
 
 body .push {
@@ -354,6 +355,14 @@ body #section-2 {
   left: 0;
   right: 0;
   margin: auto;
+  background: #005dff;
+}
+
+body .footer {
+  bottom: 0;
+  width: 100%;
+  margin-top: 80px;
+  z-index: 100;
 }
 
 #query-results .level {
