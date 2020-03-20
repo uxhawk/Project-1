@@ -348,6 +348,14 @@ body .test {
   background: #ffffff;
 }
 
+body #section-2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
 #query-results .level {
   margin-bottom: 0px;
 }
