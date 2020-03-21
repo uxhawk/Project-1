@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var city, lat, lng, lat, lng;
+    var city, lat, lng, lat, lng, rating;
     var apiSelector = 0;
     var searchTerm = "Restaurants";
     var showSearch = false;
@@ -120,6 +120,10 @@ $(document).ready(function() {
                     dataType: 'json'
                 }).then(function(response) {
                     console.log(response);
+
+
+
+
                     $("#query-results").empty();
                     $("#search-btn").removeClass("is-loading");
 
@@ -136,8 +140,29 @@ $(document).ready(function() {
                     $("#query-results").append(cardHeader);
 
                     //only display 10 search results
-                    for (let i = 0; i < 10; i++) {
+                    for (var i = 0; i < 10; i++) {
+                        rating = response.businesses[i].rating;
 
+                        function printStars(id) {
+
+                            var halfStarIcon = $(`<i class="fas fa-star-half">`);
+
+                            if (rating % 1 === .5) {
+                                rating -= .5;
+
+                                for (let j = 1; j <= rating; j++) {
+                                    var starIcon = $(`<i class="fas fa-star">`);
+                                    $(`#rating-${id}`).append(starIcon);
+                                }
+                                $(`#rating-${id}`).append(halfStarIcon);
+
+                            } else {
+                                for (let k = 1; k <= rating; k++) {
+                                    var starIcon = $(`<i class="fas fa-star">`);
+                                    $(`#rating-${id}`).append(starIcon);
+                                }
+                            }
+                        }
                         //Use Bulma CSS to style search results; populate based on API response
                         var resultsCard = $(`<div class="columns cards-containers">
                         <div class="column is-8 is-offset-2 test cards-container ">
@@ -157,8 +182,7 @@ $(document).ready(function() {
                                         </div>
                                     </div>
                                     <p class="is-size-6 has-text-grey-light m-b-sm m-t-xxs"> ${response.businesses[i].categories[0].title}</p>
-                                    <p class="is-size-6 has-text-grey-dark m-t-sm">Rating: <span id="rating${i}"
-                                        class="p-l-sm p-r-xs">${response.businesses[i].rating}</span><i class="fas fa-star"></i>
+                                    <p id="rating-${i}">
                                         </p>
                                         <p class="is-size-6 has-text-grey-dark m-t-xxs">Reviews: <span class="p-l-sm">${response.businesses[i].review_count}</span>
                                         </p>
@@ -171,15 +195,16 @@ $(document).ready(function() {
 
                         //Add the UI element to the DOM
                         $("#query-results").append(resultsCard);
+                        printStars(i);
 
                         if (i === 9) {
                             resultsCard.css("margin-bottom", "40px");
                         }
                     }
+
                     tl.play();
                     $("#landing").css("z-index", "-1");
                     $("#section-2").css("z-index", "99");
-
                 });
             } else if (apiSelector === 2) {
                 $.ajax({
@@ -312,4 +337,7 @@ $(document).ready(function() {
             stagger: 0.1
         });
     }
+
+
+
 });
