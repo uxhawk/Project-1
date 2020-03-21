@@ -1,11 +1,13 @@
 $(document).ready(function() {
-    var favorites = [];
     var city, lat, lng, lat, lng;
     var apiSelector = 0;
     var searchTerm = "Restaurants";
     var showSearch = false;
 
+    //instantiate gsap timeline
     var tl = gsap.timeline();
+
+    //define the animation after user clicks "show me cool things"
     tl.to(".landing-el", {
         duration: .2,
         y: -900,
@@ -19,23 +21,18 @@ $(document).ready(function() {
     });
     tl.pause();
 
+    //format the landing page for initial view
     $("#pac-input").hide();
     $("#search-btn").hide();
-    $("#landing").css("z-index", "99")
-    $("#section-2").css("z-index", "-1")
+    $("#landing").css("z-index", "99");
+    $("#section-2").css("z-index", "-1");
 
-
-    //click event listener for favorite hearts
-    $(document).on("click", ".favorite", function() {
-        //console.log("you clicked a favorite");
-    });
-
+    //click event listener so users can conduct another searh
     $(document).on("click", ".search-again", function() {
         tl.reverse();
         $("#landing").css("z-index", "99");
         $("#section-2").css("z-index", "-1");
         $("#section-2").hide();
-
     });
 
     //click event listener for event toggles
@@ -57,16 +54,15 @@ $(document).ready(function() {
         } else if (apiSelector === 2) {
             $("#restaurant, #beer").removeClass("is-hovered");
             searchTerm = "Concerts";
-            console.log(apiSelector);
         }
     });
 
-    //places auto complete
-    var input = document.getElementById("pac-input");
+    //set up the input field to only show search results for cities
     var options = {
         types: ['(cities)'],
     };
 
+    //add event listener to the Show Me Cool Things button
     $("#search-btn").click(function() {
         city = $("#pac-input").val();
 
@@ -76,11 +72,15 @@ $(document).ready(function() {
 
         $("#section-2").show();
         $("#search-btn").addClass("is-loading");
+
+        //define the request object that will be sent to the Places API
         var request = {
             query: city
         };
 
         var service = new google.maps.places.PlacesService(document.getElementById("service"));
+
+        //send the request to places API, then a callback function is executed
         service.textSearch(request, callback);
 
         //clear after search
@@ -95,6 +95,8 @@ $(document).ready(function() {
     };
     var autocomplete = new google.maps.places.Autocomplete(input, options);
 
+
+    //callback function where all the magic happens
     function callback(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
 
@@ -105,7 +107,10 @@ $(document).ready(function() {
 
             var eventURL = `https://app.ticketmaster.com/discovery/v2/events.json?classificationName=music&apikey=nlha7A86hmR12YOlaa17AwPtVyVRCa0B&latlong=${lat},${lng}`;
 
+
             if (apiSelector === 0 || apiSelector === 1) {
+
+                //Yelp API Call
                 $.ajax({
                     url: queryURL,
                     headers: {
@@ -114,8 +119,10 @@ $(document).ready(function() {
                     method: 'GET',
                     dataType: 'json'
                 }).then(function(response) {
+                    console.log(response);
                     $("#query-results").empty();
                     $("#search-btn").removeClass("is-loading");
+
                     var cardHeader = $(`<div id="card-header" class="columns">
                                 <div class="column is-8 is-offset-2 test cards-container has-text-centered has-background-primary has-text-white has-text-weight-bold">
                                     <p>${searchTerm} in ${city}</p>
@@ -128,22 +135,24 @@ $(document).ready(function() {
                     $("#query-results").append(searchAgain);
                     $("#query-results").append(cardHeader);
 
-                    for (let i = 0; i < 9; i++) {
+                    //only display 10 search results
+                    for (let i = 0; i < 10; i++) {
+
+                        //Use Bulma CSS to style search results; populate based on API response
                         var resultsCard = $(`<div class="columns cards-containers">
                         <div class="column is-8 is-offset-2 test cards-container ">
-                            <div class="columns is-mobile">
+                            <div class="columns is-mobile border">
                                 <div class="column is-one-third "><img class="event-img"
                                         src="${response.businesses[i].image_url}"
                                         alt="">
                                 </div>
                                 <div class="column is-two-thirds has-text-left p-l-md">
                                     <div class=" p-b-none m-b-none">
-                                        <div class="columns is-mobile">
+                                        <div class="columns is-mobile ">
                                             <div class="column is-four-fifths">
                                                 <h2 class="is-size-4 has-text-grey-dark results-card">${response.businesses[i].name}</h2>
                                             </div>
                                             <div class="column is-one-fifth has-text-right p-r-lg">
-                                                <i class="far fa-heart favorite" data-index="${i}"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -160,8 +169,10 @@ $(document).ready(function() {
                         </div>
                     </div>`);
 
+                        //Add the UI element to the DOM
                         $("#query-results").append(resultsCard);
-                        if (i === 8) {
+
+                        if (i === 9) {
                             resultsCard.css("margin-bottom", "40px");
                         }
                     }
@@ -192,22 +203,23 @@ $(document).ready(function() {
                     $("#query-results").append(searchAgain);
                     $("#query-results").append(cardHeader);
 
-                    for (let i = 0; i < 9; i++) {
+                    for (let i = 0; i < 10; i++) {
+
+                        //define the styles for the display of search results
                         var resultsCard = $(`<div class="columns">
                         <div class="column is-8 is-offset-2 test cards-container ">
-                            <div class="columns is-mobile">
+                            <div class="columns is-mobile border">
                                 <div class="column is-one-third "><img class="event-img"
                                         src="${response._embedded.events[i].images[2].url}"
                                         alt="">
                                 </div>
                                 <div class="column is-two-thirds has-text-left p-l-md">
                                     <div class=" p-b-none m-b-none">
-                                        <div class="columns is-mobile">
+                                        <div class="columns is-mobile ">
                                             <div class="column is-four-fifths">
                                                 <h2 class="is-size-4 has-text-grey-dark results-card">${response._embedded.events[i].name}</h2>
                                             </div>
                                             <div class="column is-one-fifth has-text-right p-r-lg">
-                                                <i class="far fa-heart favorite" data-index="${i}"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -223,7 +235,7 @@ $(document).ready(function() {
                     </div>`);
 
                         $("#query-results").append(resultsCard);
-                        if (i === 8) {
+                        if (i === 9) {
                             resultsCard.css("margin-bottom", "40px");
                         }
                     }
@@ -233,6 +245,7 @@ $(document).ready(function() {
                 $("#section-2").css("z-index", "99");
             }
 
+            //get and display weather data for the current city's lat/lng
             var weatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=imperial&appid=3ccf586db422a1812c96a52bbfafc856`;
 
             $.ajax({

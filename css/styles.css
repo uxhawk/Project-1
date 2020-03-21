@@ -372,4 +372,8 @@ body .footer {
 #query-results .event-img {
   width: 400px;
 }
+
+#query-results .border {
+  border-bottom: 1px solid lightgray;
+}
 /*# sourceMappingURL=styles.css.map */
