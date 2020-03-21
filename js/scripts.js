@@ -253,14 +253,19 @@ $(document).ready(function() {
                 method: 'GET'
             }).then(function(response) {
                 $("#weather").empty();
+
                 var iconCode = response.weather[0].icon;
+
+                //Interpolate function into icon URL to return daytime icons only
                 var iconURL = `https://openweathermap.org/img/wn/${formatIcon(iconCode)}d.png`;
 
+                //Use Bulma CSS to style weather display; populate based on API response
                 var weatherDiv = $(`<div id="weather" class="weather-container has-text-centered has-text-white m-b-md anim-4">
                 <p class="is-size-5"></i>Current Weather in <span id="city-weather">${city}</span></p>
                 <p id="cur-temp" class="is-size-3 level-item">${Math.round(response.main.temp)}&#730F<img src="${iconURL}" alt="Weather icon"></p>
                 </div>`);
 
+                //Display in DOM
                 $("#section-2").prepend(weatherDiv);
             });
             //all ajax functions should be above this last curly bracket
@@ -269,6 +274,7 @@ $(document).ready(function() {
 
     function formatIcon(code) {
         var arr = code.split("");
+        //remove the last item from the icon code; always a letter to denote time of day
         arr.pop();
         iconCode = arr.join("");
         return iconCode;
