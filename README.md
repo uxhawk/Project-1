@@ -36,5 +36,4 @@
     <li><a href="https://github.com/uxhawk">David Hawkins</a></li>
     <li><a href="https://github.com/Frank-Calderon">Frank Calderon</a></li>
     <li><a href="https://github.com/canil2">Anil Chagari</a></li>
-    <li><a href="https://github.com/eskista">Edom esesha</a></li>
 </ul>
