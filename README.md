@@ -1,8 +1,7 @@
 <h1>Cool Things</h1>
+<p>Explore <a href="https://uxhawk.github.io/Project-1/">Cool Things</a></p>
 <img src="https://lh3.googleusercontent.com/eIK6CCNTFYI6F0FE_YlXi903Dxw1Rs6hdAsCNUSqc29StPb3P7_iTI2aGlgc-kf72LPDF886r-6mvbrRjqk5ZZydRL7bBghgoaVe-FcycxJWHPMii2jiNSIiWLsnDo0kOGOU8MuGLaU6_6JwhljzBZYfDPfmy9nYl6NELEOknaKymB9Pv0AZ2Fv3BN0eZYeTnLqlIQorFg0PkXO6kbA40n-jlFXl0RiFBo5u2sLxfY5YpJUDlRNJju1Per1wDXGwHNxiXQNMTbTkLDhuKZgoxCg952COHh6bZOJSUUL9s4xgVUoTAXK7V0r4CX860g7taHO7An8Dfvp7gQ4ITGJErEWygnWdOw7tVlurvciPJ6cy6LXj6SOzHUIotZF-gvEhEXbS0foVMKLgYmcn2CLw55_6mV0ZXoEECATfkR-RsOFXw-uI5RIsDHaffPg_jm0ZpTy9KpbeRLVi-X6gE_nJy8EbOtApy8a7MJh8_kpZsOr9IaNr7x8cKnlZy79D1t6DRr_cFJlPn5C51-1DUah5Z8NLIrgP9_auV9OvL9yAkzMLJpLkB5LQTOpeNV4guqYMsB_Xh_NuSiiHyGDYd5F6PmvghBiYrJsHoXlovupg44GUSdICjq8f6YfP2zHxe4EmnDFKh9NVRVXO_0KuxfJS0wMX2iddEi8E_6JpuZ2u6fDQIYYawHVdcP6sv_sKQQ=w736-h549-no"
     alt="Search screen for food, beer, or concerts">
-
-<p>Explore <a href="https://uxhawk.github.io/Project-1/">Cool Things</a></p>
 
 <h2>APIs</h2>
 <p><a href="https://uxhawk.github.io/Project-1/">Cool Things</a> employs client-side and server-side APIs to return
